@@ -73,6 +73,9 @@ public class ElaboratoGurobi
 			// Creazione delle variabili
 			GRBVar[][] xij = aggiungiVariabili(model, produzione, domanda);
 			
+			//variabili per far risolvere a Gurobi direttamente la forma standard del problema
+			GRBVar[] s = aggiungiVariabiliSlackSurplus(model, produzione, domanda);
+			
 			// Aggiunta della funzione obiettivo
 			aggiungiFunzioneObiettivo(model, xij, d_ij, c);
 			
@@ -86,12 +89,92 @@ public class ElaboratoGurobi
 			model.optimize();
 			
 			risolvi(model);
+			stampaRisposte(model);
 		} catch (GRBException e)
 		{
 			System.out.println("Error code: " + e.getErrorCode() + ". " + e.getMessage());
 		}
 	}
 	
+	private static void stampaRisposte(GRBModel model) {
+		System.out.println("GRUPPO 15.");
+		System.out.println("Componenti: Santicoli.");
+		System.out.println("");
+		System.out.println("QUESITO I: ");
+		try {
+			System.out.printf("funzione obiettivo = %.04f\n", model.get(GRB.DoubleAttr.ObjVal));
+			System.out.print("soluzione di base ottima: [");
+            // Ciclo sulle var originali
+            for (GRBVar var : model.getVars()) {
+                System.out.printf("%.04f, ", Math.abs(var.get(GRB.DoubleAttr.X)));
+            }
+            System.out.println("");
+            // Soluzione ottima multipla
+            System.out.print("soluzione ottima multipla: ");
+            // Controllo se c'è una var non in base con CCR nullo
+            boolean multipla = false;
+
+            // Ciclo su tutte le var, guardo tra quelle non in base
+            // se loro CCR è nullo
+
+            // Per var originali
+            for (GRBVar var : model.getVars()) {
+                if (var.get(GRB.IntAttr.VBasis) != 0) {
+                    if (var.get(GRB.DoubleAttr.RC) == 0.) {
+                        multipla = true;
+                        break;
+                    }
+                }
+            }
+            //Per var di slack
+            for (GRBConstr constr : model.getConstrs()) {
+                if (constr.get(GRB.IntAttr.CBasis) != 0) {
+                    if (constr.get(GRB.DoubleAttr.Pi) == 0.) {
+                        multipla = true;
+                        break;
+                    }
+                }
+            }
+
+            System.out.print(multipla ? "Sì" : "No");
+            
+            System.out.println("");
+            
+         // Soluzione ottima degenere
+            System.out.print("soluzione ottima degenere: ");
+            // Controllo se c'è una var in base nulla.
+            boolean degenere = false;
+
+            // Ciclo su tutte le var, guardo tra quelle in base se nulle
+            // Per var originali
+            for (GRBVar var : model.getVars()) {
+                if (var.get(GRB.IntAttr.VBasis) == 0) {
+                    if (var.get(GRB.DoubleAttr.X) == 0.) {
+                        degenere = true;
+                        break;
+                    }
+                }
+            }
+            // Per var di slack
+            for (GRBConstr constr : model.getConstrs()) {
+                if (constr.get(GRB.IntAttr.CBasis) == 0) {
+                    if (constr.get(GRB.DoubleAttr.Slack) == 0.) {
+                        degenere = true;
+                        break;
+                    }
+                }
+            }
+            System.out.println(degenere ? "Sì" : "No");
+            
+		} catch (GRBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
+	}
+
 	private static GRBVar[][] aggiungiVariabili(GRBModel model, int[] produzione, int[] domanda) throws GRBException
 	{
 		GRBVar[][] xij = new GRBVar[produzione.length][domanda.length];
@@ -104,6 +187,17 @@ public class ElaboratoGurobi
 			}
 		}
 		return xij;
+	}
+	
+	private static GRBVar[] aggiungiVariabiliSlackSurplus(GRBModel model, int[] produzione, int[] domanda) throws GRBException
+	{
+		GRBVar[] s = new GRBVar[produzione.length + domanda.length];
+
+		for(int i = 0; i < produzione.length + domanda.length; i++) {
+			s[i] = model.addVar(0, GRB.INFINITY, 0, GRB.CONTINUOUS, "s_" + i);
+		}
+
+		return s;
 	}
 	
 	private static void aggiungiFunzioneObiettivo(GRBModel model, GRBVar[][] xij, int[][] distanze, double costoKm) throws GRBException
