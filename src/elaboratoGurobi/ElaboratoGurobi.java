@@ -74,7 +74,7 @@ public class ElaboratoGurobi
 			GRBVar[][] xij = aggiungiVariabili(model, produzione, domanda);
 			
 			//variabili per far risolvere a Gurobi direttamente la forma standard del problema
-			GRBVar[] s = aggiungiVariabiliSlackSurplus(model, produzione, domanda);
+			//GRBVar[] s = aggiungiVariabiliSlackSurplus(model, produzione, domanda);
 			
 			// Aggiunta della funzione obiettivo
 			aggiungiFunzioneObiettivo(model, xij, d_ij, c);
@@ -104,11 +104,13 @@ public class ElaboratoGurobi
 		try {
 			System.out.printf("funzione obiettivo = %.04f\n", model.get(GRB.DoubleAttr.ObjVal));
 			System.out.print("soluzione di base ottima: [");
-            // Ciclo sulle var originali
+           
+			// Ciclo sulle var originali
             for (GRBVar var : model.getVars()) {
                 System.out.printf("%.04f, ", Math.abs(var.get(GRB.DoubleAttr.X)));
             }
             System.out.println("");
+            
             // Soluzione ottima multipla
             System.out.print("soluzione ottima multipla: ");
             // Controllo se c'è una var non in base con CCR nullo
@@ -140,7 +142,7 @@ public class ElaboratoGurobi
             
             System.out.println("");
             
-         // Soluzione ottima degenere
+            // Soluzione ottima degenere
             System.out.print("soluzione ottima degenere: ");
             // Controllo se c'è una var in base nulla.
             boolean degenere = false;
@@ -189,7 +191,7 @@ public class ElaboratoGurobi
 		return xij;
 	}
 	
-	private static GRBVar[] aggiungiVariabiliSlackSurplus(GRBModel model, int[] produzione, int[] domanda) throws GRBException
+/*	private static GRBVar[] aggiungiVariabiliSlackSurplus(GRBModel model, int[] produzione, int[] domanda) throws GRBException
 	{
 		GRBVar[] s = new GRBVar[produzione.length + domanda.length];
 
@@ -198,7 +200,7 @@ public class ElaboratoGurobi
 		}
 
 		return s;
-	}
+	}*/
 	
 	private static void aggiungiFunzioneObiettivo(GRBModel model, GRBVar[][] xij, int[][] distanze, double costoKm) throws GRBException
 	{
