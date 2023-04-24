@@ -622,3 +622,1147 @@ Coefficient statistics:
 
 Solved in 0 iterations and 0.00 seconds (0.00 work units)
 Optimal objective  2.188000000e+04
+
+Gurobi 10.0.1 (linux64, Java) logging started Mon 24 Apr 2023 09:10:28 AM CEST
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-02-12
+Set parameter Presolve to value 0
+Set parameter Method to value 0
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 1275 columns and 2550 nonzeros
+Model fingerprint: 0x7328fc9e
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [5e+03, 2e+04]
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0    0.0000000e+00   4.720000e+05   1.275000e+09      0s
+     244    2.1880000e+04   0.000000e+00   0.000000e+00      0s
+
+Solved in 244 iterations and 0.01 seconds (0.00 work units)
+Optimal objective  2.188000000e+04
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 1275 columns and 2550 nonzeros
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [5e+03, 2e+04]
+
+Solved in 0 iterations and 0.00 seconds (0.00 work units)
+Optimal objective  2.188000000e+04
+
+Gurobi 10.0.1 (linux64, Java) logging started Mon 24 Apr 2023 09:16:36 AM CEST
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-02-12
+Set parameter Presolve to value 0
+Set parameter Method to value 0
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 1275 columns and 2550 nonzeros
+Model fingerprint: 0x7328fc9e
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [5e+03, 2e+04]
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0    0.0000000e+00   4.720000e+05   1.275000e+09      0s
+     244    2.1880000e+04   0.000000e+00   0.000000e+00      0s
+
+Solved in 244 iterations and 0.01 seconds (0.00 work units)
+Optimal objective  2.188000000e+04
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 1275 columns and 2550 nonzeros
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [5e+03, 2e+04]
+
+Solved in 0 iterations and 0.00 seconds (0.00 work units)
+Optimal objective  2.188000000e+04
+
+Gurobi 10.0.1 (linux64, Java) logging started Mon 24 Apr 2023 09:17:18 AM CEST
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-02-12
+Set parameter Presolve to value 0
+Set parameter Method to value 0
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 1275 columns and 2550 nonzeros
+Model fingerprint: 0x7328fc9e
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [5e+03, 2e+04]
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0    0.0000000e+00   4.720000e+05   1.275000e+09      0s
+     244    2.1880000e+04   0.000000e+00   0.000000e+00      0s
+
+Solved in 244 iterations and 0.01 seconds (0.00 work units)
+Optimal objective  2.188000000e+04
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 1275 columns and 2550 nonzeros
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [5e+03, 2e+04]
+
+Solved in 0 iterations and 0.00 seconds (0.00 work units)
+Optimal objective  2.188000000e+04
+
+Gurobi 10.0.1 (linux64, Java) logging started Mon 24 Apr 2023 09:27:50 AM CEST
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-02-12
+Set parameter Presolve to value 0
+Set parameter Method to value 0
+
+Gurobi 10.0.1 (linux64, Java) logging started Mon 24 Apr 2023 09:33:46 AM CEST
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-02-12
+Set parameter Presolve to value 0
+Set parameter Method to value 0
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 1275 columns and 2550 nonzeros
+Model fingerprint: 0x2ff3498c
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 1e-01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [5e+03, 2e+04]
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0    0.0000000e+00   4.720000e+05   1.275000e+09      0s
+      85    0.0000000e+00   0.000000e+00   0.000000e+00      0s
+
+Solved in 85 iterations and 0.00 seconds (0.00 work units)
+Optimal objective  0.000000000e+00
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 1275 columns and 2550 nonzeros
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 1e-01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [5e+03, 2e+04]
+
+Solved in 0 iterations and 0.00 seconds (0.00 work units)
+Optimal objective  0.000000000e+00
+
+Gurobi 10.0.1 (linux64, Java) logging started Mon 24 Apr 2023 09:56:50 AM CEST
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-02-12
+Set parameter Presolve to value 0
+Set parameter Method to value 0
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 1275 columns and 2550 nonzeros
+Model fingerprint: 0xacebd5b5
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 1e-01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [5e+03, 2e+04]
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0    0.0000000e+00   4.720000e+05   1.275000e+09      0s
+      86    0.0000000e+00   0.000000e+00   0.000000e+00      0s
+
+Solved in 86 iterations and 0.00 seconds (0.00 work units)
+Optimal objective  0.000000000e+00
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 1275 columns and 2550 nonzeros
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 1e-01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [5e+03, 2e+04]
+
+Solved in 0 iterations and 0.00 seconds (0.00 work units)
+Optimal objective  0.000000000e+00
+
+Gurobi 10.0.1 (linux64, Java) logging started Mon 24 Apr 2023 09:57:46 AM CEST
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-02-12
+Set parameter Presolve to value 0
+Set parameter Method to value 0
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 1275 columns and 2550 nonzeros
+Model fingerprint: 0x7328fc9e
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [5e+03, 2e+04]
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0    0.0000000e+00   4.720000e+05   1.275000e+09      0s
+     244    2.1880000e+04   0.000000e+00   0.000000e+00      0s
+
+Solved in 244 iterations and 0.01 seconds (0.00 work units)
+Optimal objective  2.188000000e+04
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 1275 columns and 2550 nonzeros
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [5e+03, 2e+04]
+
+Solved in 0 iterations and 0.00 seconds (0.00 work units)
+Optimal objective  2.188000000e+04
+
+Gurobi 10.0.1 (linux64, Java) logging started Mon 24 Apr 2023 03:38:05 PM CEST
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-02-12
+Set parameter Presolve to value 0
+Set parameter Method to value 0
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 1275 columns and 2550 nonzeros
+Model fingerprint: 0x7328fc9e
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [5e+03, 2e+04]
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0    0.0000000e+00   4.720000e+05   1.275000e+09      0s
+     244    2.1880000e+04   0.000000e+00   0.000000e+00      0s
+
+Solved in 244 iterations and 0.01 seconds (0.00 work units)
+Optimal objective  2.188000000e+04
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 1275 columns and 2550 nonzeros
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [5e+03, 2e+04]
+
+Solved in 0 iterations and 0.00 seconds (0.00 work units)
+Optimal objective  2.188000000e+04
+
+Gurobi 10.0.1 (linux64, Java) logging started Mon 24 Apr 2023 03:41:50 PM CEST
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-02-12
+Set parameter Presolve to value 0
+Set parameter Method to value 0
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 2550 columns and 2550 nonzeros
+Model fingerprint: 0xdc27975d
+Variable types: 1275 continuous, 1275 integer (1275 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [5e+03, 2e+04]
+Found heuristic solution: objective 118190.00000
+Variable types: 1275 continuous, 1275 integer (1275 binary)
+
+Root relaxation: objective 2.188000e+04, 183 iterations, 0.01 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+*    0     0               0    21880.000000 21880.0000  0.00%     -    0s
+
+Explored 1 nodes (183 simplex iterations) in 0.07 seconds (0.00 work units)
+Thread count was 4 (of 4 available processors)
+
+Solution count 2: 21880 118190 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 2.188000000000e+04, best bound 2.188000000000e+04, gap 0.0000%
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 2550 columns and 2550 nonzeros
+Model fingerprint: 0xdc27975d
+Variable types: 1275 continuous, 1275 integer (1275 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [5e+03, 2e+04]
+
+Continuing optimization...
+
+
+Explored 1 nodes (183 simplex iterations) in 0.00 seconds (0.00 work units)
+Thread count was 4 (of 4 available processors)
+
+Solution count 2: 21880 118190 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 2.188000000000e+04, best bound 2.188000000000e+04, gap 0.0000%
+
+Gurobi 10.0.1 (linux64, Java) logging started Mon 24 Apr 2023 03:42:35 PM CEST
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-02-12
+Set parameter Presolve to value 0
+Set parameter Method to value 0
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 2550 columns and 2550 nonzeros
+Model fingerprint: 0xdc27975d
+Variable types: 1275 continuous, 1275 integer (1275 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [5e+03, 2e+04]
+Found heuristic solution: objective 118190.00000
+Variable types: 1275 continuous, 1275 integer (1275 binary)
+
+Root relaxation: objective 2.188000e+04, 183 iterations, 0.01 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+*    0     0               0    21880.000000 21880.0000  0.00%     -    0s
+
+Explored 1 nodes (183 simplex iterations) in 0.05 seconds (0.00 work units)
+Thread count was 4 (of 4 available processors)
+
+Solution count 2: 21880 118190 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 2.188000000000e+04, best bound 2.188000000000e+04, gap 0.0000%
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 2550 columns and 2550 nonzeros
+Model fingerprint: 0xdc27975d
+Variable types: 1275 continuous, 1275 integer (1275 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [5e+03, 2e+04]
+
+Continuing optimization...
+
+
+Explored 1 nodes (183 simplex iterations) in 0.00 seconds (0.00 work units)
+Thread count was 4 (of 4 available processors)
+
+Solution count 2: 21880 118190 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 2.188000000000e+04, best bound 2.188000000000e+04, gap 0.0000%
+
+Gurobi 10.0.1 (linux64, Java) logging started Mon 24 Apr 2023 03:51:50 PM CEST
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-02-12
+Set parameter Presolve to value 0
+Set parameter Method to value 0
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 2550 columns and 2550 nonzeros
+Model fingerprint: 0xdc27975d
+Variable types: 1275 continuous, 1275 integer (1275 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [5e+03, 2e+04]
+Found heuristic solution: objective 118190.00000
+Variable types: 1275 continuous, 1275 integer (1275 binary)
+
+Root relaxation: objective 2.188000e+04, 183 iterations, 0.01 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+*    0     0               0    21880.000000 21880.0000  0.00%     -    0s
+
+Explored 1 nodes (183 simplex iterations) in 0.05 seconds (0.00 work units)
+Thread count was 4 (of 4 available processors)
+
+Solution count 2: 21880 118190 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 2.188000000000e+04, best bound 2.188000000000e+04, gap 0.0000%
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 2550 columns and 2550 nonzeros
+Model fingerprint: 0xdc27975d
+Variable types: 1275 continuous, 1275 integer (1275 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [5e+03, 2e+04]
+
+Continuing optimization...
+
+
+Explored 1 nodes (183 simplex iterations) in 0.00 seconds (0.00 work units)
+Thread count was 4 (of 4 available processors)
+
+Solution count 2: 21880 118190 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 2.188000000000e+04, best bound 2.188000000000e+04, gap 0.0000%
+
+Gurobi 10.0.1 (linux64, Java) logging started Mon 24 Apr 2023 05:13:11 PM CEST
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-02-12
+Set parameter Presolve to value 0
+Set parameter Method to value 0
+
+Gurobi 10.0.1 (linux64, Java) logging started Mon 24 Apr 2023 05:13:47 PM CEST
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-02-12
+Set parameter Presolve to value 0
+Set parameter Method to value 0
+
+Gurobi 10.0.1 (linux64, Java) logging started Mon 24 Apr 2023 05:14:52 PM CEST
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-02-12
+Set parameter Presolve to value 0
+Set parameter Method to value 0
+
+Gurobi 10.0.1 (linux64, Java) logging started Mon 24 Apr 2023 05:15:12 PM CEST
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-02-12
+Set parameter Presolve to value 0
+Set parameter Method to value 0
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 1351 rows, 2550 columns and 2789 nonzeros
+Model fingerprint: 0xdecb6b06
+Variable types: 1275 continuous, 1275 integer (1275 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 2e+04]
+Found heuristic solution: objective 118190.00000
+Variable types: 1275 continuous, 1275 integer (1275 binary)
+
+Root relaxation: objective 2.188000e+04, 202 iterations, 0.01 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+*    0     0               0    21880.000000 21880.0000  0.00%     -    0s
+
+Explored 1 nodes (202 simplex iterations) in 0.05 seconds (0.00 work units)
+Thread count was 4 (of 4 available processors)
+
+Solution count 2: 21880 118190 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 2.188000000000e+04, best bound 2.188000000000e+04, gap 0.0000%
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 1351 rows, 2550 columns and 2789 nonzeros
+Model fingerprint: 0xdecb6b06
+Variable types: 1275 continuous, 1275 integer (1275 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 2e+04]
+
+Continuing optimization...
+
+
+Explored 1 nodes (202 simplex iterations) in 0.00 seconds (0.00 work units)
+Thread count was 4 (of 4 available processors)
+
+Solution count 2: 21880 118190 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 2.188000000000e+04, best bound 2.188000000000e+04, gap 0.0000%
+
+Gurobi 10.0.1 (linux64, Java) logging started Mon 24 Apr 2023 05:16:11 PM CEST
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-02-12
+Set parameter Presolve to value 0
+Set parameter Method to value 0
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 1351 rows, 2550 columns and 2789 nonzeros
+Model fingerprint: 0xdecb6b06
+Variable types: 1275 continuous, 1275 integer (1275 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 2e+04]
+Found heuristic solution: objective 118190.00000
+Variable types: 1275 continuous, 1275 integer (1275 binary)
+
+Root relaxation: objective 2.188000e+04, 202 iterations, 0.01 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+*    0     0               0    21880.000000 21880.0000  0.00%     -    0s
+
+Explored 1 nodes (202 simplex iterations) in 0.06 seconds (0.00 work units)
+Thread count was 4 (of 4 available processors)
+
+Solution count 2: 21880 118190 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 2.188000000000e+04, best bound 2.188000000000e+04, gap 0.0000%
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 1351 rows, 2550 columns and 2789 nonzeros
+Model fingerprint: 0xdecb6b06
+Variable types: 1275 continuous, 1275 integer (1275 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 2e+04]
+
+Continuing optimization...
+
+
+Explored 1 nodes (202 simplex iterations) in 0.00 seconds (0.00 work units)
+Thread count was 4 (of 4 available processors)
+
+Solution count 2: 21880 118190 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 2.188000000000e+04, best bound 2.188000000000e+04, gap 0.0000%
+
+Gurobi 10.0.1 (linux64, Java) logging started Mon 24 Apr 2023 05:16:41 PM CEST
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-02-12
+Set parameter Presolve to value 0
+Set parameter Method to value 0
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 1351 rows, 2550 columns and 2789 nonzeros
+Model fingerprint: 0xdecb6b06
+Variable types: 1275 continuous, 1275 integer (1275 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 2e+04]
+Found heuristic solution: objective 118190.00000
+Variable types: 1275 continuous, 1275 integer (1275 binary)
+
+Root relaxation: objective 2.188000e+04, 202 iterations, 0.01 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+*    0     0               0    21880.000000 21880.0000  0.00%     -    0s
+
+Explored 1 nodes (202 simplex iterations) in 0.05 seconds (0.00 work units)
+Thread count was 4 (of 4 available processors)
+
+Solution count 2: 21880 118190 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 2.188000000000e+04, best bound 2.188000000000e+04, gap 0.0000%
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 1351 rows, 2550 columns and 2789 nonzeros
+Model fingerprint: 0xdecb6b06
+Variable types: 1275 continuous, 1275 integer (1275 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 2e+04]
+
+Continuing optimization...
+
+
+Explored 1 nodes (202 simplex iterations) in 0.00 seconds (0.00 work units)
+Thread count was 4 (of 4 available processors)
+
+Solution count 2: 21880 118190 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 2.188000000000e+04, best bound 2.188000000000e+04, gap 0.0000%
+
+Gurobi 10.0.1 (linux64, Java) logging started Mon 24 Apr 2023 05:18:53 PM CEST
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-02-12
+Set parameter Presolve to value 0
+Set parameter Method to value 0
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 1351 rows, 2550 columns and 2789 nonzeros
+Model fingerprint: 0xdecb6b06
+Variable types: 1275 continuous, 1275 integer (1275 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 2e+04]
+Found heuristic solution: objective 118190.00000
+Variable types: 1275 continuous, 1275 integer (1275 binary)
+
+Root relaxation: objective 2.188000e+04, 202 iterations, 0.01 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+*    0     0               0    21880.000000 21880.0000  0.00%     -    0s
+
+Explored 1 nodes (202 simplex iterations) in 0.03 seconds (0.00 work units)
+Thread count was 4 (of 4 available processors)
+
+Solution count 2: 21880 118190 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 2.188000000000e+04, best bound 2.188000000000e+04, gap 0.0000%
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 1351 rows, 2550 columns and 2789 nonzeros
+Model fingerprint: 0xdecb6b06
+Variable types: 1275 continuous, 1275 integer (1275 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 2e+04]
+
+Continuing optimization...
+
+
+Explored 1 nodes (202 simplex iterations) in 0.00 seconds (0.00 work units)
+Thread count was 4 (of 4 available processors)
+
+Solution count 2: 21880 118190 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 2.188000000000e+04, best bound 2.188000000000e+04, gap 0.0000%
+
+Gurobi 10.0.1 (linux64, Java) logging started Mon 24 Apr 2023 05:26:44 PM CEST
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-02-12
+Set parameter Presolve to value 0
+Set parameter Method to value 0
+
+Gurobi 10.0.1 (linux64, Java) logging started Mon 24 Apr 2023 05:37:27 PM CEST
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-02-12
+Set parameter Presolve to value 0
+Set parameter Method to value 0
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 1351 rows, 2550 columns and 2789 nonzeros
+Model fingerprint: 0xdecb6b06
+Variable types: 1275 continuous, 1275 integer (1275 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 2e+04]
+Found heuristic solution: objective 118190.00000
+Variable types: 1275 continuous, 1275 integer (1275 binary)
+
+Root relaxation: objective 2.188000e+04, 202 iterations, 0.01 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+*    0     0               0    21880.000000 21880.0000  0.00%     -    0s
+
+Explored 1 nodes (202 simplex iterations) in 0.03 seconds (0.00 work units)
+Thread count was 4 (of 4 available processors)
+
+Solution count 2: 21880 118190 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 2.188000000000e+04, best bound 2.188000000000e+04, gap 0.0000%
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 1351 rows, 2550 columns and 2789 nonzeros
+Model fingerprint: 0xdecb6b06
+Variable types: 1275 continuous, 1275 integer (1275 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 2e+04]
+
+Continuing optimization...
+
+
+Explored 1 nodes (202 simplex iterations) in 0.00 seconds (0.00 work units)
+Thread count was 4 (of 4 available processors)
+
+Solution count 2: 21880 118190 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 2.188000000000e+04, best bound 2.188000000000e+04, gap 0.0000%
+
+Gurobi 10.0.1 (linux64, Java) logging started Mon 24 Apr 2023 05:39:54 PM CEST
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-02-12
+Set parameter Presolve to value 0
+Set parameter Method to value 0
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 1351 rows, 2550 columns and 2789 nonzeros
+Model fingerprint: 0xdecb6b06
+Variable types: 1275 continuous, 1275 integer (1275 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 2e+04]
+Found heuristic solution: objective 118190.00000
+Variable types: 1275 continuous, 1275 integer (1275 binary)
+
+Root relaxation: objective 2.188000e+04, 202 iterations, 0.01 seconds (0.00 work units)
+
+    Nodes    |    Current Node    |     Objective Bounds      |     Work
+ Expl Unexpl |  Obj  Depth IntInf | Incumbent    BestBd   Gap | It/Node Time
+
+*    0     0               0    21880.000000 21880.0000  0.00%     -    0s
+
+Explored 1 nodes (202 simplex iterations) in 0.04 seconds (0.00 work units)
+Thread count was 4 (of 4 available processors)
+
+Solution count 2: 21880 118190 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 2.188000000000e+04, best bound 2.188000000000e+04, gap 0.0000%
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 1351 rows, 2550 columns and 2789 nonzeros
+Model fingerprint: 0xdecb6b06
+Variable types: 1275 continuous, 1275 integer (1275 binary)
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [1e+00, 1e+00]
+  RHS range        [1e+00, 2e+04]
+
+Continuing optimization...
+
+
+Explored 1 nodes (202 simplex iterations) in 0.00 seconds (0.00 work units)
+Thread count was 4 (of 4 available processors)
+
+Solution count 2: 21880 118190 
+
+Optimal solution found (tolerance 1.00e-04)
+Best objective 2.188000000000e+04, best bound 2.188000000000e+04, gap 0.0000%
+
+Gurobi 10.0.1 (linux64, Java) logging started Mon 24 Apr 2023 05:53:47 PM CEST
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-02-12
+Set parameter Presolve to value 0
+Set parameter Method to value 0
+
+Gurobi 10.0.1 (linux64, Java) logging started Mon 24 Apr 2023 05:54:17 PM CEST
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-02-12
+Set parameter Presolve to value 0
+Set parameter Method to value 0
+
+Gurobi 10.0.1 (linux64, Java) logging started Mon 24 Apr 2023 05:54:42 PM CEST
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-02-12
+Set parameter Presolve to value 0
+Set parameter Method to value 0
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 1275 columns and 1514 nonzeros
+Model fingerprint: 0x8131654d
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [5e+03, 2e+04]
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0    0.0000000e+00   4.720000e+05   2.390000e+08      0s
+      90    2.1880000e+04   0.000000e+00   0.000000e+00      0s
+
+Solved in 90 iterations and 0.00 seconds (0.00 work units)
+Optimal objective  2.188000000e+04
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 1275 columns and 1514 nonzeros
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [5e+03, 2e+04]
+
+Solved in 0 iterations and 0.00 seconds (0.00 work units)
+Optimal objective  2.188000000e+04
+
+Gurobi 10.0.1 (linux64, Java) logging started Mon 24 Apr 2023 05:57:07 PM CEST
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-02-12
+Set parameter Presolve to value 0
+Set parameter Method to value 0
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 1275 columns and 1514 nonzeros
+Model fingerprint: 0x8131654d
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [5e+03, 2e+04]
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0    0.0000000e+00   4.720000e+05   2.390000e+08      0s
+      90    2.1880000e+04   0.000000e+00   0.000000e+00      0s
+
+Solved in 90 iterations and 0.00 seconds (0.00 work units)
+Optimal objective  2.188000000e+04
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 1275 columns and 1514 nonzeros
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [5e+03, 2e+04]
+
+Solved in 0 iterations and 0.00 seconds (0.00 work units)
+Optimal objective  2.188000000e+04
+
+Gurobi 10.0.1 (linux64, Java) logging started Mon 24 Apr 2023 05:57:55 PM CEST
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-02-12
+Set parameter Presolve to value 0
+Set parameter Method to value 0
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 1275 columns and 1514 nonzeros
+Model fingerprint: 0x8131654d
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [5e+03, 2e+04]
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0    0.0000000e+00   4.720000e+05   2.390000e+08      0s
+      90    2.1880000e+04   0.000000e+00   0.000000e+00      0s
+
+Solved in 90 iterations and 0.00 seconds (0.00 work units)
+Optimal objective  2.188000000e+04
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 1275 columns and 1514 nonzeros
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [5e+03, 2e+04]
+
+Solved in 0 iterations and 0.00 seconds (0.00 work units)
+Optimal objective  2.188000000e+04
+
+Gurobi 10.0.1 (linux64, Java) logging started Mon 24 Apr 2023 05:59:20 PM CEST
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-02-12
+Set parameter Presolve to value 0
+Set parameter Method to value 0
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 1275 columns and 1514 nonzeros
+Model fingerprint: 0x8131654d
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [5e+03, 2e+04]
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0    0.0000000e+00   4.720000e+05   2.390000e+08      0s
+      90    2.1880000e+04   0.000000e+00   0.000000e+00      0s
+
+Solved in 90 iterations and 0.00 seconds (0.00 work units)
+Optimal objective  2.188000000e+04
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 1275 columns and 1514 nonzeros
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [5e+03, 2e+04]
+
+Solved in 0 iterations and 0.00 seconds (0.00 work units)
+Optimal objective  2.188000000e+04
+
+Gurobi 10.0.1 (linux64, Java) logging started Mon 24 Apr 2023 05:59:38 PM CEST
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-02-12
+Set parameter Presolve to value 0
+Set parameter Method to value 0
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 1275 columns and 1514 nonzeros
+Model fingerprint: 0x8131654d
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [5e+03, 2e+04]
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0    0.0000000e+00   4.720000e+05   2.390000e+08      0s
+      90    2.1880000e+04   0.000000e+00   0.000000e+00      0s
+
+Solved in 90 iterations and 0.00 seconds (0.00 work units)
+Optimal objective  2.188000000e+04
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 1275 columns and 1514 nonzeros
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [5e+03, 2e+04]
+
+Solved in 0 iterations and 0.00 seconds (0.00 work units)
+Optimal objective  2.188000000e+04
+
+Gurobi 10.0.1 (linux64, Java) logging started Mon 24 Apr 2023 06:03:18 PM CEST
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-02-12
+Set parameter Presolve to value 0
+Set parameter Method to value 0
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 1275 columns and 1514 nonzeros
+Model fingerprint: 0x8131654d
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [5e+03, 2e+04]
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0    0.0000000e+00   4.720000e+05   2.390000e+08      0s
+      90    2.1880000e+04   0.000000e+00   0.000000e+00      0s
+
+Solved in 90 iterations and 0.01 seconds (0.00 work units)
+Optimal objective  2.188000000e+04
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 1275 columns and 1514 nonzeros
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [5e+03, 2e+04]
+
+Solved in 0 iterations and 0.00 seconds (0.00 work units)
+Optimal objective  2.188000000e+04
+
+Gurobi 10.0.1 (linux64, Java) logging started Mon 24 Apr 2023 06:04:13 PM CEST
+
+Set parameter Username
+Academic license - for non-commercial use only - expires 2024-02-12
+Set parameter Presolve to value 0
+Set parameter Method to value 0
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 1275 columns and 1514 nonzeros
+Model fingerprint: 0x8131654d
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [5e+03, 2e+04]
+Iteration    Objective       Primal Inf.    Dual Inf.      Time
+       0    0.0000000e+00   4.720000e+05   2.390000e+08      0s
+      90    2.1880000e+04   0.000000e+00   0.000000e+00      0s
+
+Solved in 90 iterations and 0.01 seconds (0.00 work units)
+Optimal objective  2.188000000e+04
+Gurobi Optimizer version 10.0.1 build v10.0.1rc0 (linux64)
+
+CPU model: AMD E2-7110 APU with AMD Radeon R2 Graphics, instruction set [SSE2|AVX]
+Thread count: 4 physical cores, 4 logical processors, using up to 4 threads
+
+Optimize a model with 76 rows, 1275 columns and 1514 nonzeros
+Coefficient statistics:
+  Matrix range     [1e+00, 1e+00]
+  Objective range  [1e-02, 6e-01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [5e+03, 2e+04]
+
+Solved in 0 iterations and 0.00 seconds (0.00 work units)
+Optimal objective  2.188000000e+04

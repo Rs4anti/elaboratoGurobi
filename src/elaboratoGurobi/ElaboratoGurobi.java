@@ -14,8 +14,8 @@ import gurobi.GRB.StringAttr;
 
 public class ElaboratoGurobi
 {
-	int m = 25; //numero magazzini
-	int n = 51; //numero clienti
+	static int m = 25; //numero magazzini
+	static int n = 51; //numero clienti
 	static int[][] d_ij= //distanza in Km da ciascun magazzino i a ciascun punto vendita j
 		{
 			{13,40,11,35,43,11,16,11,20,25,26,24,40,13,19,2,24,29,21,24,11,28,36,35,21,1,13,4,20,15,38,33,16,10,32,41,23,34,10,16,18,32,27,19,19,9,25,39,10,20,14},
@@ -45,14 +45,14 @@ public class ElaboratoGurobi
 			{23,23,19,18,29,18,17,14,10,17,11,21,24,25,23,19,20,26,5,8,9,10,18,18,19,18,27,18,19,16,26,26,8,22,19,25,8,16,25,7,8,24,10,18,25,25,34,23,25,16,12}
 		};
 	
-	// richieste dei n clienti
+	// richieste dei n clienti n=51
 	static int[] domanda = {8000,8000,6000,13000,13000,6000,11000,13000,7000,13000,12000,10000,7000,10000,11000,10000,5000,5000,9000,7000,10000,12000,7000,6000,7000,8000,12000,7000,10000,12000,10000,5000,10000,10000,13000,10000,12000,13000,12000,6000,8000,7000,13000,13000,12000,5000,10000,6000,9000,7000,6000};
 	
-	static //capacità dei magazzini
+	static //capacità degli m magazzini m=25
 	int[] produzione = {18000,24000,20000,16000,19000,23000,17000,18000,21000,23000,15000,17000,24000,25000,23000,23000,23000,17000,25000,24000,15000,22000,25000,23000,23000};
 	
 	static double c = 0.01;// costo trasposrto €/Km
-	int k = 12; //raggio Km
+	static int k = 12; //raggio Km
 	
 	int[] alfa_j = {1600,3500,2900,1300,4600,4100,600,4400,600,4400,2400,1600,4300,1000,1400,3800,1300,2600,1600,4300,2500,1600,1000,900,3600}; //	quesito III
 	int h = 14; //Questo II capacità magazzino 14
@@ -70,8 +70,11 @@ public class ElaboratoGurobi
 			
 			GRBModel model = new GRBModel(env);
 			
-			// Creazione delle variabili
+			// Creazione delle variabili di decisione
 			GRBVar[][] xij = aggiungiVariabili(model, produzione, domanda);
+			
+			//Creazione delle variabili binarie
+			int[][] y = creaAusiliarie(d_ij, k);
 			
 			//variabili per far risolvere a Gurobi direttamente la forma standard del problema
 			//GRBVar[] s = aggiungiVariabiliSlackSurplus(model, produzione, domanda);
@@ -83,7 +86,11 @@ public class ElaboratoGurobi
 			aggiungiVincoliProduzione(model, xij, produzione);
 			
 			// Aggiunta vincolo domanda
-			aggiungiVincoliDomanda(model, xij, domanda);
+			aggiungiVincoliDomanda(model, xij, domanda, y);
+			
+			//Aggiunta vincolo distanza
+			// Vincolo di servizio ai clienti entro il raggio k
+			
 			
 			// Ottimizza il modello
 			model.optimize();
@@ -96,6 +103,28 @@ public class ElaboratoGurobi
 		}
 	}
 	
+	private static int[][] creaAusiliarie(int[][] distanze, int raggio) {
+		// TODO Auto-generated method stub
+		int[][] ausiliarie = new int[m][n];
+		
+		for(int i=0; i<m; i++) {
+			for(int j=0; j<n; j++) {
+				if(distanze[i][j]<=raggio) {
+					
+					ausiliarie[i][j] = 1;
+				}
+				else {
+					ausiliarie[i][j] = 0;
+				}
+			System.out.println("y_"+i+"_"+j+"->" + ausiliarie[i][j]);
+			}
+			
+		}
+		
+		
+		return ausiliarie;
+	}
+
 	private static void stampaRisposte(GRBModel model) {
 		System.out.println("GRUPPO 15.");
 		System.out.println("Componenti: Santicoli.");
@@ -112,7 +141,7 @@ public class ElaboratoGurobi
             System.out.println("");
             
             // Soluzione ottima multipla
-            System.out.print("soluzione ottima multipla: ");
+            System.out.print("Multipla: ");
             // Controllo se c'è una var non in base con CCR nullo
             boolean multipla = false;
 
@@ -120,30 +149,28 @@ public class ElaboratoGurobi
             // se loro CCR è nullo
 
             // Per var originali
-            for (GRBVar var : model.getVars()) {
-                if (var.get(GRB.IntAttr.VBasis) != 0) {
-                    if (var.get(GRB.DoubleAttr.RC) == 0.) {
-                        multipla = true;
-                        break;
-                    }
-                }
-            }
-            //Per var di slack
-            for (GRBConstr constr : model.getConstrs()) {
-                if (constr.get(GRB.IntAttr.CBasis) != 0) {
-                    if (constr.get(GRB.DoubleAttr.Pi) == 0.) {
-                        multipla = true;
-                        break;
-                    }
-                }
-            }
-
-            System.out.print(multipla ? "Sì" : "No");
+			
+			  for (GRBVar var : model.getVars()) { 
+				  if (var.get(GRB.IntAttr.VBasis) != 0) {
+					  if(var.get(GRB.DoubleAttr.RC) == 0.) {
+						  	multipla = true; 
+						  	break; } 
+					  } 
+				  } //Per var di slack 
+			 for (GRBConstr constr : model.getConstrs()) {
+				 if(constr.get(GRB.IntAttr.CBasis) != 0) {
+					 if (constr.get(GRB.DoubleAttr.Pi) == 0.) 
+					 { multipla = true; break; }
+					 }
+				 }
+			  
+			  System.out.print(multipla ? "Sì" : "No");
+			 
             
             System.out.println("");
             
             // Soluzione ottima degenere
-            System.out.print("soluzione ottima degenere: ");
+            System.out.print("Degenere: ");
             // Controllo se c'è una var in base nulla.
             boolean degenere = false;
 
@@ -172,25 +199,22 @@ public class ElaboratoGurobi
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
 	}
 
 	private static GRBVar[][] aggiungiVariabili(GRBModel model, int[] produzione, int[] domanda) throws GRBException
 	{
 		GRBVar[][] xij = new GRBVar[produzione.length][domanda.length];
 
-		for (int i = 0; i < produzione.length; i++)
+		for (int i = 0; i < m; i++) //matrice mxn 25x51
 		{
-			for (int j = 0; j < domanda.length; j++)
+			for (int j = 0; j < n; j++)
 			{
 				xij[i][j] = model.addVar(0, GRB.INFINITY, 0, GRB.CONTINUOUS, "xij_"+i+"_"+j);
 			}
 		}
 		return xij;
 	}
-	
+		
 /*	private static GRBVar[] aggiungiVariabiliSlackSurplus(GRBModel model, int[] produzione, int[] domanda) throws GRBException
 	{
 		GRBVar[] s = new GRBVar[produzione.length + domanda.length];
@@ -206,11 +230,10 @@ public class ElaboratoGurobi
 	{
 		GRBLinExpr obj = new GRBLinExpr();
 
-		for (int i = 0; i < 25; i++)
-		{
-			for (int j = 0; j < 51; j++)
-			{
-				obj.addTerm(distanze[i][j]*costoKm, xij[i][j]);
+		for (int i = 0; i < m; i++){
+			
+			for (int j = 0; j < n; j++){
+					obj.addTerm(distanze[i][j]*costoKm, xij[i][j]);
 			}
 		}
 		model.setObjective(obj);
@@ -219,11 +242,11 @@ public class ElaboratoGurobi
 	
 	private static void aggiungiVincoliProduzione(GRBModel model, GRBVar[][] xij, int[] produzione) throws GRBException
 	{
-		for (int i = 0; i < produzione.length; i++)
+		for (int i = 0; i < m; i++)
 		{
 			GRBLinExpr expr = new GRBLinExpr();
 
-			for (int j = 0; j < xij[0].length; j++)
+			for (int j = 0; j < n; j++)
 			{
 				expr.addTerm(1, xij[i][j]);
 			}
@@ -231,20 +254,23 @@ public class ElaboratoGurobi
 		}
 	}
 	
-	private static void aggiungiVincoliDomanda(GRBModel model, GRBVar[][] xij, int[] domanda) throws GRBException
+	private static void aggiungiVincoliDomanda(GRBModel model, GRBVar[][] xij, int[] domanda, int[][] ausiliarie) throws GRBException
 	{
-		for (int j = 0; j < domanda.length; j++)
+		for (int j = 0; j < n; j++)
 		{
 			GRBLinExpr expr = new GRBLinExpr();
 
-			for (int i = 0; i < xij.length; i++)
-			{
-				expr.addTerm(1, xij[i][j]);
-			}
+			for (int i = 0; i < m; i++)
+			
+				if(ausiliarie[i][j]!=0){
+					
+					expr.addTerm(1, xij[i][j]);
+				}
+			
 			model.addConstr(expr, GRB.GREATER_EQUAL, domanda[j], "vincolo_domanda_j_"+j);
 		}
 	}
-	
+
 	private static void risolvi(GRBModel model) throws GRBException
 	{
 		model.optimize();
