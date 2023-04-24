@@ -187,6 +187,12 @@ public class ElaboratoGurobi
             }
             System.out.println(degenere ? "Sì" : "No");
             
+            System.out.println("QUESITO II: ");
+            stampaVincoliInattivi(model);
+            stampaInfeasibleRange(model, k);
+      
+          
+            
 		} catch (GRBException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -263,4 +269,52 @@ public class ElaboratoGurobi
 			System.out.println(var.get(StringAttr.VarName)+ ": "+ var.get(DoubleAttr.X));
 		}
 	}
+
+	private static void stampaVincoliInattivi(GRBModel model) throws GRBException {
+	    // Risolve il modello
+	    model.optimize();
+
+	    // Ottiene il valore ottimo della funzione obiettivo
+	    double objValue = model.get(GRB.DoubleAttr.ObjVal);
+
+	    // Cicla sui vincoli e verifica se sono attivi o meno
+	    GRBConstr[] constraints = model.getConstrs();
+	    for (int i = 0; i < constraints.length; i++) {
+	        GRBConstr constraint = constraints[i];
+	        double slack = constraint.get(GRB.DoubleAttr.Slack);
+	        if (slack != 0.0) {
+	            // Il vincolo non è attivo
+	            System.out.println("Il vincolo " + constraint.get(GRB.StringAttr.ConstrName) + " non è attivo.");
+	        }
+	    }
+	}
+
+	private static void stampaInfeasibleRange(GRBModel model, int k) throws GRBException {
+		
+		double lowerBound = 0.0; // Limite inferiore di k
+	    double upperBound = GRB.INFINITY; // Limite superiore di k
+		
+		GRBVar kVar = model.addVar(lowerBound, upperBound, 0.0, GRB.CONTINUOUS, "kVar");
+		
+
+	    while (lowerBound < upperBound) {
+	        double kValue = (lowerBound + upperBound) / 2.0; // Calcola il valore di k come la media dei limiti inferiore e superiore
+	        kVar.set(GRB.DoubleAttr.X, kValue); // Imposta il valore di k nel modello
+	        model.optimize(); // Risolve il modello
+
+	        int status = model.get(GRB.IntAttr.Status); // Ottiene lo status della soluzione
+
+	        if (status == GRB.Status.INF_OR_UNBD) {
+	            // Il problema non ha soluzione per il valore corrente di k
+	            upperBound = kValue; // Aggiorna il limite superiore
+	        } else {
+	            // Il problema ha soluzione per il valore corrente di k
+	            lowerBound = kValue; // Aggiorna il limite inferiore
+	        }
+	    }
+
+	    // Stampa l'intervallo di k in cui il problema non ha soluzione
+	    System.out.println("L'intervallo di k in cui il problema non ha soluzione è: [" + lowerBound + ", " + upperBound + "]");
+	}
+
 }
