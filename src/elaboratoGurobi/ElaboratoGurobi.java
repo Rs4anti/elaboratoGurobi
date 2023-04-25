@@ -58,7 +58,7 @@ public class ElaboratoGurobi
 	int h = 14; //Questo II capacità magazzino 14
 	int x = 3;// Quesito II
 	int y = 4;//Quesito II
-	
+	static int[][] yij = new int[m][n];
 	public static void main(String[] args)
 	{
 		try
@@ -74,7 +74,7 @@ public class ElaboratoGurobi
 			GRBVar[][] xij = aggiungiVariabili(model, produzione, domanda);
 			
 			//Creazione delle variabili binarie
-			int[][] y = creaAusiliarie(d_ij, k);
+			yij = creaAusiliarie(d_ij, k);
 			
 			// Aggiunta della funzione obiettivo
 			aggiungiFunzioneObiettivo(model, xij, d_ij, c);
@@ -83,7 +83,7 @@ public class ElaboratoGurobi
 			aggiungiVincoliProduzione(model, xij, produzione);
 			
 			// Aggiunta vincolo domanda
-			aggiungiVincoliDomanda(model, xij, domanda, y);
+			aggiungiVincoliDomanda(model, xij, domanda, yij);
 			
 			// Ottimizza il modello
 			model.optimize();
@@ -189,7 +189,9 @@ public class ElaboratoGurobi
             
             System.out.println("QUESITO II: ");
             stampaVincoliInattivi(model);
-            stampaInfeasibleRange(model, k);
+            //	TODO: SISTEMARE
+            //stampaInfeasibleRange(d_ij,k);
+            stampaDuale();
       
           
             
@@ -197,6 +199,80 @@ public class ElaboratoGurobi
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	private static void stampaDuale() {
+		 try {
+			 
+			 int yAttive = contaAusiliarieAttive(yij);
+	         GRBEnv env = new GRBEnv();
+	         GRBModel model = new GRBModel(env);
+	         
+	         // Definizione delle variabili duali lambda
+	         int w = n+m+yAttive; // Numero di vincoli del problema primale n+m+yAttive
+	         GRBVar[] lambda = new GRBVar[w];
+	         for (int i = 0; i < w; i++) {
+	            lambda[i] = model.addVar(0, GRB.INFINITY, 0, GRB.CONTINUOUS, "lambda_" + (i+1));
+	         }
+	         
+	         // Funzione obiettivo del problema duale
+	         GRBLinExpr obj = new GRBLinExpr();
+	         obj.addTerm(5, lambda[0]);
+	         obj.addTerm(10, lambda[1]);
+	         obj.addTerm(8, lambda[2]);
+	         model.setObjective(obj, GRB.MAXIMIZE);
+	         
+	         // Vincoli del problema duale
+	         GRBLinExpr c1 = new GRBLinExpr();
+	         c1.addTerm(1, lambda[0]);
+	         c1.addTerm(2, lambda[1]);
+	         c1.addTerm(1, lambda[2]);
+	         model.addConstr(c1, GRB.LESS_EQUAL, 4, "c1");
+	         
+	         GRBLinExpr c2 = new GRBLinExpr();
+	         c2.addTerm(4, lambda[0]);
+	         c2.addTerm(1, lambda[1]);
+	         c2.addTerm(2, lambda[2]);
+	         model.addConstr(c2, GRB.LESS_EQUAL, 7, "c2");
+	         
+	         GRBLinExpr c3 = new GRBLinExpr();
+	         c3.addTerm(3, lambda[0]);
+	         c3.addTerm(4, lambda[1]);
+	         c3.addTerm(2, lambda[2]);
+	         model.addConstr(c3, GRB.LESS_EQUAL, 5, "c3");
+	         
+	         // Risoluzione del problema duale
+	         model.optimize();
+	         
+	         // Stampa della soluzione ottima di base del problema duale
+	         System.out.println("Soluzione ottima di base del problema duale:");
+	         System.out.println("===========================================");
+	         System.out.println("lambda_1 = " + lambda[0].get(GRB.DoubleAttr.X));
+	         System.out.println("lambda_2 = " + lambda[1].get(GRB.DoubleAttr.X));
+	         System.out.println("lambda_3 = " + lambda[2].get(GRB.DoubleAttr.X));
+	         
+	         // Rilascio delle risorse utilizzate da Gurobi
+	         model.dispose();
+	         env.dispose();
+	         
+	      } catch (GRBException e) {
+	         System.out.println("Errore durante l'ottimizzazione: " + e.getMessage());
+	      }
+}
+
+
+	private static int contaAusiliarieAttive(int[][] matrice) {
+		int count =0;
+		
+		for(int i=0;i<m;i++) {
+			for(int j=0; j<n; j++) {
+				if(matrice[i][j]==1) {
+					count++;
+				}
+			}
+		}
+		
+		return count;
 	}
 
 	private static GRBVar[][] aggiungiVariabili(GRBModel model, int[] produzione, int[] domanda) throws GRBException{
@@ -252,6 +328,8 @@ public class ElaboratoGurobi
 		}
 	}
 
+	
+	
 	private static void risolvi(GRBModel model) throws GRBException
 	{
 		model.optimize();
@@ -275,7 +353,7 @@ public class ElaboratoGurobi
 	    model.optimize();
 
 	    // Ottiene il valore ottimo della funzione obiettivo
-	    double objValue = model.get(GRB.DoubleAttr.ObjVal);
+	   // double objValue = model.get(GRB.DoubleAttr.ObjVal);
 
 	    // Cicla sui vincoli e verifica se sono attivi o meno
 	    GRBConstr[] constraints = model.getConstrs();
@@ -289,32 +367,67 @@ public class ElaboratoGurobi
 	    }
 	}
 
-	private static void stampaInfeasibleRange(GRBModel model, int k) throws GRBException {
-		
-		double lowerBound = 0.0; // Limite inferiore di k
-	    double upperBound = GRB.INFINITY; // Limite superiore di k
-		
-		GRBVar kVar = model.addVar(lowerBound, upperBound, 0.0, GRB.CONTINUOUS, "kVar");
-		
-
-	    while (lowerBound < upperBound) {
-	        double kValue = (lowerBound + upperBound) / 2.0; // Calcola il valore di k come la media dei limiti inferiore e superiore
-	        kVar.set(GRB.DoubleAttr.X, kValue); // Imposta il valore di k nel modello
-	        model.optimize(); // Risolve il modello
-
-	        int status = model.get(GRB.IntAttr.Status); // Ottiene lo status della soluzione
-
-	        if (status == GRB.Status.INF_OR_UNBD) {
-	            // Il problema non ha soluzione per il valore corrente di k
-	            upperBound = kValue; // Aggiorna il limite superiore
-	        } else {
-	            // Il problema ha soluzione per il valore corrente di k
-	            lowerBound = kValue; // Aggiorna il limite inferiore
-	        }
-	    }
-
-	    // Stampa l'intervallo di k in cui il problema non ha soluzione
-	    System.out.println("L'intervallo di k in cui il problema non ha soluzione è: [" + lowerBound + ", " + upperBound + "]");
-	}
-
+//	private static void stampaInfeasibleRange(int[][] distanze,int raggio) throws GRBException{
+//		
+//		GRBEnv env = new GRBEnv("stampaInfeasibleRange.log");
+//		int kFinish=raggio;
+//		boolean infeasibleOrUnbounded = false;
+//		
+//		GRBModel model = new GRBModel(env);
+//		
+//		// Creazione delle variabili di decisione
+//		GRBVar[][] zij = aggiungiVariabili(model, produzione, domanda);
+//		
+//		//Creazione delle variabili binarie
+//		int[][] y = creaAusiliarie(d_ij, k);
+//		
+//		// Aggiunta della funzione obiettivo
+//		aggiungiFunzioneObiettivo(model, zij, d_ij, c);
+//		
+//		// Aggiunta vincoli produzione
+//		aggiungiVincoliProduzione(model, zij, produzione);
+//		
+//		// Aggiunta vincolo domanda
+//		//aggiungiVincoliDomanda(model, zij, domanda, y);
+//
+//	    while (infeasibleOrUnbounded != true) {
+//	    	
+//	    	
+//	    	//mxn con 1 quando dij<=raggio
+//	    	for(int i=0; i<m; i++) {
+//				for(int j=0; j<n; j++) {
+//					if(distanze[i][j]<=raggio){
+//						
+//						y[i][j] = 1;
+//					}
+//					else{
+//						y[i][j] = 0;
+//					}
+//				}
+//			}
+//	    	aggiungiVincoliDomanda(model, zij, domanda, y);
+//	     
+//	        model.optimize(); // Risolve il modello
+//
+//	        int status = model.get(GRB.IntAttr.Status); // Ottiene lo status della soluzione
+//
+//	        if (status == GRB.Status.INF_OR_UNBD){
+//	        	
+//	        	infeasibleOrUnbounded= true;
+//	        	
+//	        	// Il problema non ha soluzione per il valore corrente di k
+//	        } 
+//	        else{
+//	            // Il problema ha soluzione per il valore corrente del raggio
+//	        	System.out.println("Il problema ha soluzione per il valore corrente di k " +kFinish);
+//	        	kFinish++;
+//	        }
+//	    }
+//	    // Stampa l'intervallo di k in cui il problema non ha soluzione
+//	    System.out.println("Il problema NON ha soluzione per il valore corrente di k " +kFinish);
+//	//potrei ritornare kFinish
+//	}
+	
 }
+
+
