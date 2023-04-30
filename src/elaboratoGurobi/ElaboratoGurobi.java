@@ -88,8 +88,6 @@ public class ElaboratoGurobi
 			// Aggiunta vincolo domanda
 			aggiungiVincoliDomanda(model, xij, domanda, y);
 			
-			//Aggiunta vincolo distanze
-			
 			// Ottimizza il modello
 			model.optimize();
 
