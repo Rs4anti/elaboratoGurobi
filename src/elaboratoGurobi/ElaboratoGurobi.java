@@ -203,9 +203,11 @@ public class ElaboratoGurobi
             
             System.out.println("QUESITO II: ");
             
-            stampaIntervalloK();
+            
             
             stampaVincoliInattivi(model);
+            
+            stampaIntervalloK();
             
             risolviDuale(model);
             
@@ -260,8 +262,6 @@ public class ElaboratoGurobi
 				aggiungiVincoliDomanda(modelIncrement, xij, domanda, y);
 				modelIncrement.optimize();
 				
-				System.out.println("Capacita iniziale magazzino "+ produzione[magazzinoH]);
-				
 				//ricavo valori delle variabili di modelIncrement
 				
 				// Ciclo sulle var originali
@@ -280,12 +280,6 @@ public class ElaboratoGurobi
 		        	
 		        	if(originalVarValues[i]!=modelIncrementVarsValue[i]){
 		        		
-		        		System.out.println("QUANDO AUMENTO: ");
-		        		
-		        		System.out.println(originalVarValues[i]+  " diverso da " + modelIncrementVarsValue[i] );
-		        		
-		        		System.out.println("Soluzione di base cambia quando la capacità del magazzino aumenta da "
-		        				+ produzione[magazzinoH]+ " a ----> " + capacitaInc);
 		        		basiUguali = false;
 		        		break;
 		        	}
@@ -334,8 +328,6 @@ public class ElaboratoGurobi
 				aggiungiVincoliDomanda(modelDecrement, xij, domanda, y);
 				modelDecrement.optimize();
 				
-				System.out.println("Capacita iniziale magazzino "+ produzione[magazzinoH]);
-				
 				//ricavo valori delle variabili di modelIncrement
 				
 				// Ciclo sulle var originali
@@ -354,12 +346,6 @@ public class ElaboratoGurobi
 		        	
 		        	if(originalVarValues[i]!=modelIncrementVarsValue[i]){
 		        		
-		        		
-		        		System.out.println("QUANDO DIMINUISCO: ");
-		        		System.out.println(originalVarValues[i]+  " diverso da " + modelIncrementVarsValue[i] );
-		        		
-		        		System.out.println("Soluzione di base cambia quando diminuisce da "
-		        				+ produzione[magazzinoH]+ " a ----> " + capacitaDec);
 		        		basiUguali = false;
 		        		break;
 		        	}
@@ -376,7 +362,7 @@ public class ElaboratoGurobi
 		}
         
         
-        //decremento capacità
+       System.out.println("Intervallo s_"+ h + ": ["+ capacitaDec + "," + capacitaInc+"]");
 		
 	}
 
@@ -583,14 +569,18 @@ public class ElaboratoGurobi
 
 	    // Cicla sui vincoli e verifica se sono attivi o meno
 	    GRBConstr[] constraints = model.getConstrs();
+	    
+	    System.out.print("Lista vincoli non attivi: [");
+	    
 	    for (int i = 0; i < constraints.length; i++) {
 	        GRBConstr constraint = constraints[i];
 	        double slack = constraint.get(GRB.DoubleAttr.Slack);
 	        if (slack != 0.0) {
 	            // Il vincolo non è attivo
-	            System.out.println("Il vincolo " + constraint.get(GRB.StringAttr.ConstrName) + " non è attivo.");
+	            System.out.print(constraint.get(GRB.StringAttr.ConstrName)+",");
 	        }
 	    }
+	    System.out.println("");
 	}
 }
 
