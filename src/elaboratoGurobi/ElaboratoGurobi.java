@@ -199,7 +199,7 @@ public class ElaboratoGurobi
             
             System.out.println("QUESITO II: ");
             
-            //stampaIntervalloK(model);
+            stampaIntervalloK();
             
             stampaVincoliInattivi(model);
             
@@ -211,18 +211,83 @@ public class ElaboratoGurobi
 		}
 	}
 
-//	private static void stampaIntervalloK(GRBModel model) {
-//		int k=0;
-//		
-//		model.optimize();
-//
-//		int status = model.get(GRB.IntAttr.Status);
-//
-//		System.out.println("\n\n\nStato Ottimizzazione: "+ status);
-//		
-//		
-//		
-//	}
+	private static void stampaIntervalloK() {
+	
+		int minDistanza=0;
+		int maxDistanza =0; //63
+		int kMax=0;
+		int kMin=0;
+		
+		 for (int i = 0; i < d_ij.length; i++) {
+	         for (int j = 0; j < d_ij[i].length; j++) {
+	            if (d_ij[i][j] > maxDistanza) {
+	               maxDistanza = d_ij[i][j];
+	            }
+	            if (d_ij[i][j] < minDistanza) {
+	               minDistanza = d_ij[i][j];
+	            }
+	         }
+	      }
+		 
+		 System.out.println("Distanza minima: "+ minDistanza);
+		 System.out.println("Distanza massima: "+ maxDistanza);
+		 
+		try
+		{
+			GRBEnv envK = new GRBEnv();
+			
+			envK.set(IntParam.Presolve, 0);
+			envK.set(IntParam.Method, 0);
+			
+	
+
+			for(int i=0; i<=maxDistanza; i++) {
+				
+				GRBModel modelK = new GRBModel(envK);
+				
+				// Creazione delle variabili di decisione
+				GRBVar[][] xij = aggiungiVariabili(modelK, produzione, domanda);
+				
+				// Aggiunta vincoli produzione
+				aggiungiVincoliProduzione(modelK, xij, produzione);
+
+				// Aggiunta della funzione obiettivo
+				aggiungiFunzioneObiettivo(modelK, xij, d_ij, c);
+				//Creazione delle variabili binarie
+				int[][] y = creaAusiliarie(d_ij, i);
+				// Aggiunta vincolo domanda
+				aggiungiVincoliDomanda(modelK, xij, domanda, y);
+				modelK.optimize();
+				
+				int status = modelK.get(GRB.IntAttr.Status);
+				System.out.println("\n\n\nStato Ottimizzazione: "+ status+ " valore di k: " +i);
+				if(status == 3 || status ==5) {
+					System.out.println("\n\n\nInfeasible per valore di k: " +i);
+					if(i<=kMin) {
+						kMin=i;
+					}
+					if(i>=kMax) {
+						kMax=i;
+					}
+				}
+				else if(status == 2) {
+					System.out.println("\n\n\nSoluzione ottima trovata per valore di k: " +i);
+					break;
+				}
+				
+				System.out.println();
+				
+			}
+			System.out.println("Intervallo k: (" + kMin + ", " + kMax + ")");
+			// 2 soluzione ottima trovata
+			// 3 non esiste soluzione ammissibile (infeasible)
+			// 5 soluzione illimitata
+
+			}catch (GRBException e)
+		{
+			System.out.println("Error code: " + e.getErrorCode() + ". " + e.getMessage());
+		}
+}
 
 
 	private static void risolviDuale(GRBModel model) {
