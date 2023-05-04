@@ -198,6 +198,9 @@ public class ElaboratoGurobi
             System.out.println(degenere ? "Sì" : "No");
             
             System.out.println("QUESITO II: ");
+            
+            //stampaIntervalloK(model);
+            
             stampaVincoliInattivi(model);
             
             risolviDuale(model);
@@ -207,6 +210,20 @@ public class ElaboratoGurobi
 			e.printStackTrace();
 		}
 	}
+
+//	private static void stampaIntervalloK(GRBModel model) {
+//		int k=0;
+//		
+//		model.optimize();
+//
+//		int status = model.get(GRB.IntAttr.Status);
+//
+//		System.out.println("\n\n\nStato Ottimizzazione: "+ status);
+//		
+//		
+//		
+//	}
+
 
 	private static void risolviDuale(GRBModel model) {
 
@@ -222,8 +239,14 @@ public class ElaboratoGurobi
 				    		
 				    		GRBVar[] dualVar = modelD.getVars();  
 				    		
+				    		System.out.println("Numero variabili duale: " + dualVar.length);	    		
+				    		
 				    		for(int i=0; i<dualVar.length; i++) {
-				    			System.out.println("Dual value for variable " + dualVar[i].toString());
+				    			
+				    			int index = i+1;
+				    			System.out.print("Lambda "+ index + ":" );
+				    			System.out.printf("%.04f, ", Math.abs(dualVar[i].get(GRB.DoubleAttr.X)));
+				    			System.out.println("");
 				    		}
 				    		
 					} catch (GRBException e) {
