@@ -88,6 +88,8 @@ public class ElaboratoGurobi
 			// Aggiunta vincolo domanda
 			aggiungiVincoliDomanda(model, xij, domanda, y);
 			
+			//Aggiunta vincolo distanze
+			
 			// Ottimizza il modello
 			model.optimize();
 
@@ -198,7 +200,7 @@ public class ElaboratoGurobi
             System.out.println("QUESITO II: ");
             stampaVincoliInattivi(model);
             
-            risolviDuale(env, model, d_ij, ausiliarie);
+            risolviDuale(model);
             
 		} catch (GRBException e) {
 			// TODO Auto-generated catch block
@@ -206,86 +208,32 @@ public class ElaboratoGurobi
 		}
 	}
 
-	private static void risolviDuale(GRBEnv env, GRBModel model, int[][] distanze, int[][] ausiliarie)throws GRBException {
-		
-		// Estrazione della soluzione ottima del problema primale
-	      double objVal = model.get(GRB.DoubleAttr.ObjVal);
-	      System.out.println("Soluzione del problema primale: " + objVal);
-	      
-	   // Estrazione dei coefficienti della soluzione duale
-	      int dualNumber = produzione.length+domanda.length;
-	      double[] duals = model.get(GRB.DoubleAttr.Pi, model.getConstrs(), 0, dualNumber);
-	      
-	   // Creazione del modello duale
-	      GRBModel dual = new GRBModel(env);
-	   
-	   // Definizione delle variabili del problema duale pari n_vincoli_prod+n_vincoli_domanda
-	      
-	      GRBVar[] y = new GRBVar[dualNumber];
-	      
-	      for(int i=0; i<dualNumber; i++) {
-	    	  
-	    	  y[i] = dual.addVar(0.0, GRB.INFINITY, duals[i], GRB.CONTINUOUS, "y_"+i);
-	      }
-	      
-	      // Definizione della funzione obiettivo del problema duale
-	      GRBLinExpr objDual = new GRBLinExpr();
-	      //per definire la fo devo prendere i coeff dei vincoli del primale 
-	      //es.1° coeff del primo vincolo prima entra in fo davanti a y1, cosi fino a 25esimo magazzino
-	      //da y26 a y77 per coeff vincoli domanda
-	      for(int i=0; i<produzione.length; i++) { //da 0 a 24
-	    	  objDual.addTerm(produzione[i], y[i]);
-	      }
-	      for(int i=produzione.length; i<produzione.length+domanda.length; i++) { //da 25 a 51
-	    	  objDual.addTerm(domanda[i-produzione.length], y[i]);
-	      }
-	     
-	      //Setto massimizzazione perche primale di minimo
-	      dual.setObjective(objDual, GRB.MAXIMIZE);
-	      
-	   // Definizione dei vincoli del problema duale
-	      
-	      //per quanto riguarda quelli di produzione
-	      GRBLinExpr cDual = new GRBLinExpr();
-	      int coeff =0;
-	      for (int i = 0; i < m; i++) {
-	          //double prodotto = 0.0;
-	          //GRBConstr constr = model.getConstrByName("vincolo_produzione_i_"+i);
-	          for (int j = 0; j < n; j++) {
-	        	  
-	        	  coeff = distanze[i][j]*k;
-	        	  cDual.addTerm(coeff, y[i]);
-	        	  
-	             // prodotto += matrice[i][j] * vettore[j];
-	          }
-	          dual.addConstr(cDual, GRB.GREATER_EQUAL, 1, "cDual_prod_"+i);
-	         // risultato[i] = prodotto;
-	      }
-	      
-	      //per quanto riguarda quelli di domanda
-	      for (int j = 0; j < n; j++){
+	private static void risolviDuale(GRBModel model) {
 
-				for (int i = 0; i < m; i++){
-					if(ausiliarie[i][j]==1) {
-						cDual.addTerm(1.0, y[produzione.length+i]);
+		            
+		            GRBModel modelD;
+					try {
+						modelD = model.dualize();
+						 modelD.optimize();
+				            
+				            int status = modelD.get(GRB.IntAttr.Status);
+
+				    		System.out.println("\n\n\nStato Ottimizzazione Duale: "+ status);
+				    		
+				    		GRBVar[] dualVar = modelD.getVars();  
+				    		
+				    		for(int i=0; i<dualVar.length; i++) {
+				    			System.out.println("Dual value for variable " + dualVar[i].toString());
+				    		}
+				    		
+					} catch (GRBException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-					
-				}
-				dual.addConstr(cDual, GRB.LESS_EQUAL, 1, "cDual_domanda_j_"+j);
-			}
-	      
-	   dual.optimize();	   
-	   // Estrazione della soluzione ottima del problema duale
-	   int status = dual.get(GRB.IntAttr.Status);
 
-	   System.out.println("\n\n\nStato Ottimizzazione: "+ status);
-	   if(status == 5) {
-		   System.out.println("Soluzione duale illimmitata");
-	   }
-	   else {
-		   System.out.printf("funzione obiettivo duale= %.04f\n", dual.get(GRB.DoubleAttr.ObjVal));
-	   }
-	   
+		           
+		    		
+		    		
 }
 
 
@@ -346,10 +294,6 @@ public class ElaboratoGurobi
 	private static void risolvi(GRBModel model) throws GRBException
 	{
 		model.optimize();
-
-		int status = model.get(GRB.IntAttr.Status);
-
-		System.out.println("\n\n\nStato Ottimizzazione: "+ status);
 		// 2 soluzione ottima trovata
 		// 3 non esiste soluzione ammissibile (infeasible)
 		// 5 soluzione illimitata
