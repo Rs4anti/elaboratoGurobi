@@ -97,7 +97,7 @@ public class ElaboratoGurobi
 
 			System.out.println("\n\n\nStato Ottimizzazione: "+ status);
 			
-			stampaRisposte(env, model, y);
+			stampaRisposte(env, model, y, xij);
 		} catch (GRBException e)
 		{
 			System.out.println("Error code: " + e.getErrorCode() + ". " + e.getMessage());
@@ -123,7 +123,7 @@ public class ElaboratoGurobi
 	return y;
 }
 
-	private static void stampaRisposte(GRBEnv env, GRBModel model, int[][] ausiliarie) {
+	private static void stampaRisposte(GRBEnv env, GRBModel model, int[][] ausiliarie, GRBVar[][] xij) {
 		System.out.println("GRUPPO 15.");
 		System.out.println("Componenti: Santicoli.");
 		System.out.println("");
@@ -131,12 +131,15 @@ public class ElaboratoGurobi
 		
 		try {
 			System.out.printf("funzione obiettivo = %.04f\n", model.get(GRB.DoubleAttr.ObjVal));
-			System.out.print("soluzione di base ottima: [");
+			System.out.println("soluzione di base ottima:");
            
-			// Ciclo sulle var originali
-            for (GRBVar var : model.getVars()) {
-                System.out.printf("%.04f, ", Math.abs(var.get(GRB.DoubleAttr.X)));
-            }
+			
+			for(int i=0; i<m; i++) {
+				for(int j=0; j<m; j++) {
+					
+					System.out.println("x_"+i+"_"+j + " : "+ xij[i][j].get(GRB.DoubleAttr.X));
+				}
+			}
             System.out.println("");
             
             // Soluzione ottima multipla
@@ -196,6 +199,8 @@ public class ElaboratoGurobi
                 }
             }
             System.out.println(degenere ? "Sì" : "No");
+            
+            System.out.println("");
             
             System.out.println("QUESITO II: ");
             
@@ -401,7 +406,7 @@ public class ElaboratoGurobi
 	private static void stampaIntervalloK() {
 	
 		int minDistanza=0;
-		int maxDistanza =0; //63
+		int maxDistanza =0;
 		int kMax=0;
 		int kMin=0;
 		
@@ -415,18 +420,13 @@ public class ElaboratoGurobi
 	            }
 	         }
 	      }
-		 
-		 System.out.println("Distanza minima: "+ minDistanza);
-		 System.out.println("Distanza massima: "+ maxDistanza);
-		 
+
 		try
 		{
 			GRBEnv envK = new GRBEnv();
 			
 			envK.set(IntParam.Presolve, 0);
 			envK.set(IntParam.Method, 0);
-			
-	
 
 			for(int i=0; i<=maxDistanza; i++) {
 				
@@ -440,16 +440,19 @@ public class ElaboratoGurobi
 
 				// Aggiunta della funzione obiettivo
 				aggiungiFunzioneObiettivo(modelK, xij, d_ij, c);
+				
 				//Creazione delle variabili binarie
 				int[][] y = creaAusiliarie(d_ij, i);
+				
 				// Aggiunta vincolo domanda
 				aggiungiVincoliDomanda(modelK, xij, domanda, y);
+				
 				modelK.optimize();
 				
 				int status = modelK.get(GRB.IntAttr.Status);
-				System.out.println("\n\n\nStato Ottimizzazione: "+ status+ " valore di k: " +i);
+				
 				if(status == 3 || status ==5) {
-					System.out.println("\n\n\nInfeasible per valore di k: " +i);
+					
 					if(i<=kMin) {
 						kMin=i;
 					}
@@ -458,14 +461,14 @@ public class ElaboratoGurobi
 					}
 				}
 				else if(status == 2) {
-					System.out.println("\n\n\nSoluzione ottima trovata per valore di k: " +i);
+					
 					break;
 				}
 				
 				System.out.println();
 				
 			}
-			System.out.println("Intervallo k: (" + kMin + ", " + kMax + ")");
+			System.out.println("Intervallo k = (" + kMin + ", " + kMax + ")");
 			// 2 soluzione ottima trovata
 			// 3 non esiste soluzione ammissibile (infeasible)
 			// 5 soluzione illimitata
