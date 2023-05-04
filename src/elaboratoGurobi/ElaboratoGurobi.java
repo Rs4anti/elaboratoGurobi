@@ -57,7 +57,7 @@ public class ElaboratoGurobi
 	static int k = 12; //raggio Km
 	
 	int[] alfa_j = {1600,3500,2900,1300,4600,4100,600,4400,600,4400,2400,1600,4300,1000,1400,3800,1300,2600,1600,4300,2500,1600,1000,900,3600}; //	quesito III
-	int h = 14; //Questo II capacità magazzino 14
+	static int h = 14; //Questo II capacità magazzino 14
 	int x = 3;// Quesito II
 	int y = 4;//Quesito II
 	
@@ -205,11 +205,198 @@ public class ElaboratoGurobi
             
             risolviDuale(model);
             
+            faiAnalisiSensitivitaMagazzino(model, h);
+            
 		} catch (GRBException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+
+	private static void faiAnalisiSensitivitaMagazzino(GRBModel model, int magazzinoH) throws GRBException {
+		// Ciclo sulle var originali
+		GRBVar[] originalVars = model.getVars(); // Ottiene tutte le variabili del modello
+		double[] originalVarValues = new double[originalVars.length]; // Crea un array per i valori delle variabili
+		for (int i = 0; i < originalVars.length; i++) {
+		    originalVarValues[i] = originalVars[i].get(GRB.DoubleAttr.X); // Aggiunge il valore della variabile all'array
+		}
+        System.out.println("");
+        
+        double capacitaInc = produzione[magazzinoH];
+        
+        //incremento la capacità
+        try
+		{
+			GRBEnv envIncrement = new GRBEnv();
+			
+			envIncrement.set(IntParam.Presolve, 0);
+			envIncrement.set(IntParam.Method, 0);
+			
+			boolean basiUguali = true;
+
+			while(basiUguali) {
+				
+				
+				
+				GRBModel modelIncrement = new GRBModel(envIncrement);
+				
+				// Creazione delle variabili di decisione
+				GRBVar[][] xij = aggiungiVariabili(modelIncrement, produzione, domanda);
+				
+				// Aggiunta vincoli produzione
+				aggiungiModificaVincoliProduzione(modelIncrement, xij, capacitaInc++, magazzinoH);
+				//aggiungiVincoliProduzione(modelIncrement, xij, produzione);
+
+				// Aggiunta della funzione obiettivo
+				aggiungiFunzioneObiettivo(modelIncrement, xij, d_ij, c);
+				//Creazione delle variabili binarie
+				int[][] y = creaAusiliarie(d_ij, k);
+				// Aggiunta vincolo domanda
+				aggiungiVincoliDomanda(modelIncrement, xij, domanda, y);
+				modelIncrement.optimize();
+				
+				int status = modelIncrement.get(GRB.IntAttr.Status);
+				System.out.println("\n\n\nStato Ottimizzazione: "+ status);
+				System.out.println("Capacita iniziale magazzino "+ produzione[magazzinoH]);
+				
+				//ricavo valori delle variabili di modelIncrement
+				
+				// Ciclo sulle var originali
+				GRBVar[] modelIncrementVars = modelIncrement.getVars(); // Ottiene tutte le variabili del modello
+				double[] modelIncrementVarsValue = new double[modelIncrementVars.length]; // Crea un array per i valori delle variabili
+				
+				for (int i = 0; i < modelIncrementVars.length; i++) {
+					modelIncrementVarsValue[i] = modelIncrementVars[i].get(GRB.DoubleAttr.X); // Aggiunge il valore della variabile all'array
+				}
+		        System.out.println("");
+				
+				
+				//qua devo controllare il valore delle variabili di base
+		        
+		        for(int i=0; i<modelIncrementVars.length; i++) {
+		        	
+		        	if(originalVarValues[i]!=modelIncrementVarsValue[i]){
+		        		
+		        		System.out.println("QUANDO AUMENTO: ");
+		        		
+		        		System.out.println(originalVarValues[i]+  " diverso da " + modelIncrementVarsValue[i] );
+		        		
+		        		System.out.println("Soluzione di base cambia quando la capacità del magazzino aumenta da "
+		        				+ produzione[magazzinoH]+ " a ----> " + capacitaInc);
+		        		basiUguali = false;
+		        		break;
+		        	}
+		        }
+			}
+		
+			// 2 soluzione ottima trovata
+			// 3 non esiste soluzione ammissibile (infeasible)
+			// 5 soluzione illimitata
+
+			}catch (GRBException e)
+		{
+			System.out.println("Error code: " + e.getErrorCode() + ". " + e.getMessage());
+		}
+        
+        double capacitaDec = produzione[magazzinoH];
+        
+        try
+		{
+			GRBEnv envDerement = new GRBEnv();
+			
+			envDerement.set(IntParam.Presolve, 0);
+			envDerement.set(IntParam.Method, 0);
+			
+			boolean basiUguali = true;
+
+			while(basiUguali) {
+				
+				
+				
+				GRBModel modelDecrement = new GRBModel(envDerement);
+				
+				// Creazione delle variabili di decisione
+				GRBVar[][] xij = aggiungiVariabili(modelDecrement, produzione, domanda);
+				
+				// Aggiunta vincoli produzione
+				aggiungiModificaVincoliProduzione(modelDecrement, xij, capacitaDec--, magazzinoH);
+				//aggiungiVincoliProduzione(modelIncrement, xij, produzione);
+
+				// Aggiunta della funzione obiettivo
+				aggiungiFunzioneObiettivo(modelDecrement, xij, d_ij, c);
+				//Creazione delle variabili binarie
+				int[][] y = creaAusiliarie(d_ij, k);
+				// Aggiunta vincolo domanda
+				aggiungiVincoliDomanda(modelDecrement, xij, domanda, y);
+				modelDecrement.optimize();
+				
+				int status = modelDecrement.get(GRB.IntAttr.Status);
+				System.out.println("\n\n\nStato Ottimizzazione: "+ status);
+				System.out.println("Capacita iniziale magazzino "+ produzione[magazzinoH]);
+				
+				//ricavo valori delle variabili di modelIncrement
+				
+				// Ciclo sulle var originali
+				GRBVar[] modelIncrementVars = modelDecrement.getVars(); // Ottiene tutte le variabili del modello
+				double[] modelIncrementVarsValue = new double[modelIncrementVars.length]; // Crea un array per i valori delle variabili
+				
+				for (int i = 0; i < modelIncrementVars.length; i++) {
+					modelIncrementVarsValue[i] = modelIncrementVars[i].get(GRB.DoubleAttr.X); // Aggiunge il valore della variabile all'array
+				}
+		        System.out.println("");
+				
+				
+				//qua devo controllare il valore delle variabili di base
+		        
+		        for(int i=0; i<modelIncrementVars.length; i++) {
+		        	
+		        	if(originalVarValues[i]!=modelIncrementVarsValue[i]){
+		        		
+		        		
+		        		System.out.println("QUANDO DIMINUISCO: ");
+		        		System.out.println(originalVarValues[i]+  " diverso da " + modelIncrementVarsValue[i] );
+		        		
+		        		System.out.println("Soluzione di base cambia quando diminuisce da "
+		        				+ produzione[magazzinoH]+ " a ----> " + capacitaDec);
+		        		basiUguali = false;
+		        		break;
+		        	}
+		        }
+			}
+		
+			// 2 soluzione ottima trovata
+			// 3 non esiste soluzione ammissibile (infeasible)
+			// 5 soluzione illimitata
+
+			}catch (GRBException e)
+		{
+			System.out.println("Error code: " + e.getErrorCode() + ". " + e.getMessage());
+		}
+        
+        
+        //decremento capacità
+		
+	}
+
+
+	private static void aggiungiModificaVincoliProduzione(GRBModel model, GRBVar[][] xij,
+			double capacita, int magazzinoH) throws GRBException {
+		
+		for (int i = 0; i < m; i++){
+			GRBLinExpr expr = new GRBLinExpr();
+
+			for (int j = 0; j < n; j++){
+				expr.addTerm(1, xij[i][j]);
+			}
+			if(i==magazzinoH) {
+				model.addConstr(expr, GRB.LESS_EQUAL, capacita, "vincolo_produzione_i_"+i);
+			}
+			else {
+				model.addConstr(expr, GRB.LESS_EQUAL, produzione[i], "vincolo_produzione_i_"+i);
+			}
+		}
+	}
+
 
 	private static void stampaIntervalloK() {
 	
@@ -317,11 +504,7 @@ public class ElaboratoGurobi
 					} catch (GRBException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-					}
-
-		           
-		    		
-		    		
+					}    		
 }
 
 
