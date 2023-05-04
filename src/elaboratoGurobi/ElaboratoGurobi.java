@@ -70,6 +70,9 @@ public class ElaboratoGurobi
 			env.set(IntParam.Presolve, 0);
 			env.set(IntParam.Method, 0);
 			
+			//Per non far stampare a video output relativo all'env
+			env.set(GRB.IntParam.OutputFlag, 0);
+			
 			GRBModel model = new GRBModel(env);
 			
 			// Creazione delle variabili di decisione
@@ -92,10 +95,6 @@ public class ElaboratoGurobi
 			
 			// Ottimizza il modello
 			model.optimize();
-
-			int status = model.get(GRB.IntAttr.Status);
-
-			System.out.println("\n\n\nStato Ottimizzazione: "+ status);
 			
 			stampaRisposte(env, model, y, xij);
 		} catch (GRBException e)
@@ -236,6 +235,7 @@ public class ElaboratoGurobi
 			
 			envIncrement.set(IntParam.Presolve, 0);
 			envIncrement.set(IntParam.Method, 0);
+			envIncrement.set(GRB.IntParam.OutputFlag, 0);
 			
 			boolean basiUguali = true;
 
@@ -260,8 +260,6 @@ public class ElaboratoGurobi
 				aggiungiVincoliDomanda(modelIncrement, xij, domanda, y);
 				modelIncrement.optimize();
 				
-				int status = modelIncrement.get(GRB.IntAttr.Status);
-				System.out.println("\n\n\nStato Ottimizzazione: "+ status);
 				System.out.println("Capacita iniziale magazzino "+ produzione[magazzinoH]);
 				
 				//ricavo valori delle variabili di modelIncrement
@@ -307,10 +305,11 @@ public class ElaboratoGurobi
         
         try
 		{
-			GRBEnv envDerement = new GRBEnv();
+			GRBEnv envDecrement = new GRBEnv();
 			
-			envDerement.set(IntParam.Presolve, 0);
-			envDerement.set(IntParam.Method, 0);
+			envDecrement.set(IntParam.Presolve, 0);
+			envDecrement.set(IntParam.Method, 0);
+			envDecrement.set(GRB.IntParam.OutputFlag, 0);
 			
 			boolean basiUguali = true;
 
@@ -318,7 +317,7 @@ public class ElaboratoGurobi
 				
 				
 				
-				GRBModel modelDecrement = new GRBModel(envDerement);
+				GRBModel modelDecrement = new GRBModel(envDecrement);
 				
 				// Creazione delle variabili di decisione
 				GRBVar[][] xij = aggiungiVariabili(modelDecrement, produzione, domanda);
@@ -335,8 +334,6 @@ public class ElaboratoGurobi
 				aggiungiVincoliDomanda(modelDecrement, xij, domanda, y);
 				modelDecrement.optimize();
 				
-				int status = modelDecrement.get(GRB.IntAttr.Status);
-				System.out.println("\n\n\nStato Ottimizzazione: "+ status);
 				System.out.println("Capacita iniziale magazzino "+ produzione[magazzinoH]);
 				
 				//ricavo valori delle variabili di modelIncrement
@@ -427,6 +424,7 @@ public class ElaboratoGurobi
 			
 			envK.set(IntParam.Presolve, 0);
 			envK.set(IntParam.Method, 0);
+			envK.set(GRB.IntParam.OutputFlag, 0);
 
 			for(int i=0; i<=maxDistanza; i++) {
 				
@@ -488,13 +486,10 @@ public class ElaboratoGurobi
 						modelD = model.dualize();
 						 modelD.optimize();
 				            
-				            int status = modelD.get(GRB.IntAttr.Status);
-
-				    		System.out.println("\n\n\nStato Ottimizzazione Duale: "+ status);
 				    		
 				    		GRBVar[] dualVar = modelD.getVars();  
 				    		
-				    		System.out.println("Numero variabili duale: " + dualVar.length);	    		
+				    		System.out.println("\nSoluzione duale: ");	    		
 				    		
 				    		for(int i=0; i<dualVar.length; i++) {
 				    			
