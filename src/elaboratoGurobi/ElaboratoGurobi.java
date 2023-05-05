@@ -58,8 +58,8 @@ public class ElaboratoGurobi
 	
 	int[] alfa_j = {1600,3500,2900,1300,4600,4100,600,4400,600,4400,2400,1600,4300,1000,1400,3800,1300,2600,1600,4300,2500,1600,1000,900,3600}; //	quesito III
 	static int h = 14; //Questo II capacità magazzino 14
-	int x = 3;// Quesito II
-	int y = 4;//Quesito II
+	static int x = 3;// Quesito II magazzino 3
+	static int y = 4;//Quesito II cliente 4
 	
 	public static void main(String[] args)
 	{
@@ -102,8 +102,7 @@ public class ElaboratoGurobi
 			System.out.println("Error code: " + e.getErrorCode() + ". " + e.getMessage());
 		}
 	}
-	
-
+		
 	private static int[][] creaAusiliarie(int[][] distanza, int raggio) throws GRBException {
 		
 		int[][] y = new int[m][n];
@@ -213,11 +212,256 @@ public class ElaboratoGurobi
             
             faiAnalisiSensitivitaMagazzino(model, h);
             
+            faiAnalisiSensitivitaDistanza(model);
+            
 		} catch (GRBException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+
+	private static void faiAnalisiSensitivitaDistanza(GRBModel model) throws GRBException {
+		
+		
+		int dMax=0, dMin=0;
+		
+		GRBVar[] originalVars = model.getVars(); 
+		// Ottiene tutte le variabili del modello
+		double[] originalVarValues = new double[originalVars.length];
+		// Crea un array per i valori delle variabili
+		for (int i = 0; i < originalVars.length; i++) {
+		    originalVarValues[i] = originalVars[i].get(GRB.DoubleAttr.X); // Aggiunge il valore della variabile all'array
+		}
+        System.out.println("");
+        
+        int distanza = d_ij[x][y];
+        
+        //Guardo cosa succede quando incremento la distanza dxy
+        try
+		{
+			GRBEnv envIncrement = new GRBEnv();
+			
+			envIncrement.set(IntParam.Presolve, 0);
+			envIncrement.set(IntParam.Method, 0);
+			envIncrement.set(GRB.IntParam.OutputFlag, 0);
+			
+			boolean basiUguali = true;
+			
+			int distanzaIncr = distanza;
+			
+			while(basiUguali) {
+	
+				distanzaIncr++;
+				
+				GRBModel modelIncrement = new GRBModel(envIncrement);
+				
+				// Creazione delle variabili di decisione
+				GRBVar[][] xij = aggiungiVariabili(modelIncrement, produzione, domanda);
+				
+				// Aggiunta vincoli produzione
+				aggiungiVincoliProduzione(modelIncrement, xij, produzione);
+				
+				
+				//Creazione delle variabili binarie
+				int[][] distanze= modificaDistanza(distanzaIncr);
+				int[][] y = creaAusiliarie(distanze, k);
+				
+				// Aggiunta della funzione obiettivo
+				aggiungiFunzioneObiettivo(modelIncrement, xij, distanze, c);
+				
+				// Aggiunta vincolo domanda
+				aggiungiVincoliDomanda(modelIncrement, xij, domanda, y);
+				modelIncrement.optimize();
+				
+				//ricavo valori delle variabili di modelIncrement
+				
+				// Ciclo sulle var originali
+				// Ricavo tutte le variabili del modello
+				GRBVar[] modelIncrementVars = modelIncrement.getVars();
+				// Crea un array con i valori delle variabili
+				double[] modelIncrementVarsValue = new double[modelIncrementVars.length]; 
+				
+				
+				// Aggiunge il valore della variabile all'array
+				for (int i = 0; i < modelIncrementVars.length; i++) {
+					modelIncrementVarsValue[i] = modelIncrementVars[i].get(GRB.DoubleAttr.X); 
+				}
+				
+				//controllo il valore delle variabili di base
+		        
+		        for(int i=0; i<modelIncrementVars.length; i++) {
+		        	
+		        	//guarda se cambia il val di una qualche var in base
+		        	if(originalVarValues[i]!=modelIncrementVarsValue[i]){
+		        		
+		        		dMax= distanzaIncr;
+		        		
+		        		basiUguali = false;
+		        		break;
+		        	}
+		        	
+		        	
+		        	//Quando la distanza arriva a 199 mi fermo
+		        	if(distanzaIncr>200){
+		        		
+		        		dMax=-1;
+		        		basiUguali = false;
+		        		break;
+		        	}
+		        }
+		    }
+		
+			// 2 soluzione ottima trovata
+			// 3 non esiste soluzione ammissibile (infeasible)
+			// 5 soluzione illimitata
+
+			}catch (GRBException e)
+		{
+			System.out.println("Error code: " + e.getErrorCode() + ". " + e.getMessage());
+		}
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        //DIMINUISCO LA DISTANZA
+        
+        try
+		{
+        	GRBEnv envDecrement = new GRBEnv();
+			
+			envDecrement.set(IntParam.Presolve, 0);
+			envDecrement.set(IntParam.Method, 0);
+			envDecrement.set(GRB.IntParam.OutputFlag, 0);
+			
+			boolean basiUguali = true;
+			
+			int distanzaDecr = distanza;
+			
+			while(basiUguali) {
+				
+				distanzaDecr--;
+
+				GRBModel modelDecrement = new GRBModel(envDecrement);
+				
+				// Creazione delle variabili di decisione
+				GRBVar[][] xij = aggiungiVariabili(modelDecrement, produzione, domanda);
+				
+				// Aggiunta vincoli produzione
+				aggiungiVincoliProduzione(modelDecrement, xij, produzione);
+				
+				
+				//Creazione delle variabili binarie
+				int[][] distanze= modificaDistanza(distanzaDecr);
+				int[][] y = creaAusiliarie(distanze, k);
+				
+				// Aggiunta della funzione obiettivo
+				aggiungiFunzioneObiettivo(modelDecrement, xij, distanze, c);
+				
+				
+				
+				// Aggiunta vincolo domanda
+				aggiungiVincoliDomanda(modelDecrement, xij, domanda, y);
+				modelDecrement.optimize();
+				
+				// Ciclo sulle var originali come quando incrementavo
+				GRBVar[] modelDecrementVars = modelDecrement.getVars(); 
+				double[] modelDecrementVarsValue = new double[modelDecrementVars.length]; 
+				
+				for (int i = 0; i < modelDecrementVars.length; i++) {
+					modelDecrementVarsValue[i] = modelDecrementVars[i].get(GRB.DoubleAttr.X);
+				}
+				
+				//qua controllo il valore delle variabili di base
+		        
+		        for(int i=0; i<modelDecrementVars.length; i++) {
+		        	
+		        	if(originalVarValues[i]!=modelDecrementVarsValue[i]){
+		        		
+		        		dMin= distanzaDecr;
+		        		basiUguali = false;
+		        		break;
+		        	}
+		        	
+		        	//quando porto la distanza dxy a 0 mi fermo
+		        	if(distanzaDecr==0){
+
+		        		basiUguali = false;
+		        		break;
+		        	}
+		        }
+		    }
+		
+			// 2 soluzione ottima trovata
+			// 3 non esiste soluzione ammissibile (infeasible)
+			// 5 soluzione illimitata
+
+			}catch (GRBException e)
+		{
+			System.out.println("Error code: " + e.getErrorCode() + ". " + e.getMessage());
+		}
+        
+        
+        if(dMax==-1) {
+        	 System.out.println("Intervallo d_xy = ["+dMin+ ", "+ "INF]" );
+        }
+        else {
+        	System.out.println("Intervallo d_xy = ["+dMin+ ", "+ dMax+"]" );
+        }
+        
+        
+ }
+
+
+	private static int[][] modificaDistanza(int distanzaIncr) {
+		//mi copio la matrice d_ij
+				int[][] distanze = new int[m][n];
+				
+				
+				for(int i=0; i<m; i++) {
+					for(int j=0; j<n; j++){
+						
+						if(i==x && j==y) {
+							distanze[i][j] = distanzaIncr;
+						}
+						else {
+							distanze[i][j] = d_ij[i][j];
+						}
+					}
+				}
+				return distanze;
+	}
+
+
+
+	private static void aggiungiModificaFunzioneOb(GRBModel modelIncrement, GRBVar[][] xij, int distanza) throws GRBException {
+		GRBLinExpr obj = new GRBLinExpr();
+
+		for (int i = 0; i < m; i++){
+			for (int j = 0; j < n; j++){
+				if(i==x && j==y) {
+					obj.addTerm(distanza*c, xij[i][j]);
+				}
+					obj.addTerm(d_ij[i][j]*c, xij[i][j]);
+			}
+		}
+		modelIncrement.setObjective(obj);
+		modelIncrement.set(GRB.IntAttr.ModelSense, GRB.MINIMIZE);
+	}
+
 
 	private static void faiAnalisiSensitivitaMagazzino(GRBModel model, int magazzinoH) throws GRBException {
 		// Ciclo sulle var originali
@@ -331,20 +575,20 @@ public class ElaboratoGurobi
 				//ricavo valori delle variabili di modelIncrement
 				
 				// Ciclo sulle var originali
-				GRBVar[] modelIncrementVars = modelDecrement.getVars(); // Ottiene tutte le variabili del modello
-				double[] modelIncrementVarsValue = new double[modelIncrementVars.length]; // Crea un array per i valori delle variabili
+				GRBVar[] modelDecrementVars = modelDecrement.getVars(); // Ottiene tutte le variabili del modello
+				double[] modelDecrementVarsValue = new double[modelDecrementVars.length]; // Crea un array per i valori delle variabili
 				
-				for (int i = 0; i < modelIncrementVars.length; i++) {
-					modelIncrementVarsValue[i] = modelIncrementVars[i].get(GRB.DoubleAttr.X); // Aggiunge il valore della variabile all'array
+				for (int i = 0; i < modelDecrementVars.length; i++) {
+					modelDecrementVarsValue[i] = modelDecrementVars[i].get(GRB.DoubleAttr.X); // Aggiunge il valore della variabile all'array
 				}
 		        System.out.println("");
 				
 				
 				//qua devo controllare il valore delle variabili di base
 		        
-		        for(int i=0; i<modelIncrementVars.length; i++) {
+		        for(int i=0; i<modelDecrementVars.length; i++) {
 		        	
-		        	if(originalVarValues[i]!=modelIncrementVarsValue[i]){
+		        	if(originalVarValues[i]!=modelDecrementVarsValue[i]){
 		        		
 		        		basiUguali = false;
 		        		break;
