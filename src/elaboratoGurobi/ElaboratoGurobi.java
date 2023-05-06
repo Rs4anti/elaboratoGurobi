@@ -241,9 +241,7 @@ public class ElaboratoGurobi
 		// Creazione delle variabili di decisione
 		GRBVar[][] xij = aggiungiVariabili(model, produzione, domanda);
 		GRBVar[] a_i = aggiungiVariabiliAusiliarieMagazzini(model);
-		
-		
-		
+
 		//Creazione delle variabili binarie
 		
 		int[][] y = creaAusiliarie(d_ij, k);
@@ -257,12 +255,9 @@ public class ElaboratoGurobi
 		
 		// Aggiunta vincoli produzione
         aggiungiVincoliProduzioneConBinarie(model, xij, a_i);
-		//aggiungiVincoliProduzione(model, xij, produzione);
 		
 		// Aggiunta vincolo domanda
 		aggiungiVincoliDomanda(model, xij, domanda, y);
-		
-		//Aggiunta vincolo distanze
 		
 		// Ottimizza il modello
 		model.optimize();
@@ -280,8 +275,33 @@ public class ElaboratoGurobi
         	
         }
         System.out.print("]");   
+
         
+        double thresholdSpedizioni = 0.0;
+        double sum=0;
         
+        for(int i=0; i<m; i++) {
+        	for(int j=0; j<n; j++) {
+        		sum += xij[i][j].get(GRB.DoubleAttr.X);
+        	}
+        }
+        
+        thresholdSpedizioni = sum /m;
+        
+        System.out.println("thresholdSpedizioni " + thresholdSpedizioni);
+        
+        for(int i=0; i<m; i++) {
+        	sum=0;
+        	for(int j=0; j<n; j++) {
+        		sum += xij[i][j].get(GRB.DoubleAttr.X);
+        	}
+        	if(sum < thresholdSpedizioni && a_i[i].get(GRB.DoubleAttr.X) == .0) {
+        		System.out.println("Magazzino meno usato: "+i);
+        	}
+        }
+        
+        double relaxationOptimum = model.get(GRB.DoubleAttr.ObjVal);
+        System.out.println("Relaxation optimum: " + relaxationOptimum);
         
 }
 
