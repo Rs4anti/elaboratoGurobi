@@ -10,9 +10,7 @@ Lambdamatic vuole soddisfare tutte le domande minimizzando il costo complessivo 
 che ciascun punto vendita i sia servito solo da magazzini posizionati nel raggio di k Km.*/
 
 import gurobi.*;
-import gurobi.GRB.DoubleAttr;
 import gurobi.GRB.IntParam;
-import gurobi.GRB.StringAttr;
 
 public class ElaboratoGurobi
 {
@@ -47,10 +45,10 @@ public class ElaboratoGurobi
 			{23,23,19,18,29,18,17,14,10,17,11,21,24,25,23,19,20,26,5,8,9,10,18,18,19,18,27,18,19,16,26,26,8,22,19,25,8,16,25,7,8,24,10,18,25,25,34,23,25,16,12}
 		};
 	
-	// richieste dei n clienti n=51
+	// richieste dei n clienti 
 	static int[] domanda = {8000,8000,6000,13000,13000,6000,11000,13000,7000,13000,12000,10000,7000,10000,11000,10000,5000,5000,9000,7000,10000,12000,7000,6000,7000,8000,12000,7000,10000,12000,10000,5000,10000,10000,13000,10000,12000,13000,12000,6000,8000,7000,13000,13000,12000,5000,10000,6000,9000,7000,6000};
 	
-	static //capacità degli m magazzini m=25
+	static //capacità degli m magazzini 
 	int[] produzione = {18000,24000,20000,16000,19000,23000,17000,18000,21000,23000,15000,17000,24000,25000,23000,23000,23000,17000,25000,24000,15000,22000,25000,23000,23000};
 	
 	static double c = 0.01;// costo trasposrto €/Km
@@ -287,8 +285,8 @@ public class ElaboratoGurobi
         }
         
         thresholdSpedizioni = sum /m;
-        
-        System.out.println("thresholdSpedizioni " + thresholdSpedizioni);
+        System.out.println();
+        System.out.print("Magazzini meno usati: ");
         
         for(int i=0; i<m; i++) {
         	sum=0;
@@ -296,12 +294,13 @@ public class ElaboratoGurobi
         		sum += xij[i][j].get(GRB.DoubleAttr.X);
         	}
         	if(sum < thresholdSpedizioni && a_i[i].get(GRB.DoubleAttr.X) == .0) {
-        		System.out.println("Magazzino meno usato: "+i);
+        		System.out.print(" "+i + " ");
         	}
         }
         
-        double relaxationOptimum = model.get(GRB.DoubleAttr.ObjVal);
-        System.out.println("Relaxation optimum: " + relaxationOptimum);
+        System.out.println();
+        double rilassamentoContinuo = model.get(GRB.DoubleAttr.ObjVal);
+        System.out.println("Rilassamento continuo= " + rilassamentoContinuo);
         
 }
 
@@ -422,7 +421,7 @@ public class ElaboratoGurobi
 		        	}
 		        	
 		        	
-		        	//Quando la distanza arriva a 199 mi fermo
+		        	//Quando la distanza arriva a 201 mi fermo
 		        	if(distanzaIncr>200){
 		        		
 		        		dMax=-1;
@@ -442,20 +441,7 @@ public class ElaboratoGurobi
 		}
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+   
         
         
         //DIMINUISCO LA DISTANZA
@@ -555,6 +541,7 @@ public class ElaboratoGurobi
 				for(int i=0; i<m; i++) {
 					for(int j=0; j<n; j++){
 						
+						//modifico il valore della distanza fra il magazzino x ed il cliente y
 						if(i==x && j==y) {
 							distanze[i][j] = distanzaIncr;
 						}
@@ -565,24 +552,6 @@ public class ElaboratoGurobi
 				}
 				return distanze;
 	}
-
-
-
-	private static void aggiungiModificaFunzioneOb(GRBModel modelIncrement, GRBVar[][] xij, int distanza) throws GRBException {
-		GRBLinExpr obj = new GRBLinExpr();
-
-		for (int i = 0; i < m; i++){
-			for (int j = 0; j < n; j++){
-				if(i==x && j==y) {
-					obj.addTerm(distanza*c, xij[i][j]);
-				}
-					obj.addTerm(d_ij[i][j]*c, xij[i][j]);
-			}
-		}
-		modelIncrement.setObjective(obj);
-		modelIncrement.set(GRB.IntAttr.ModelSense, GRB.MINIMIZE);
-	}
-
 
 	private static void faiAnalisiSensitivitaMagazzino(GRBModel model, int magazzinoH) throws GRBException {
 		// Ciclo sulle var originali
@@ -830,8 +799,7 @@ public class ElaboratoGurobi
 
 
 	private static void risolviDuale(GRBModel model) {
-
-		            
+           
 		            GRBModel modelD;
 					try {
 						modelD = model.dualize();
@@ -860,7 +828,7 @@ public class ElaboratoGurobi
 	private static GRBVar[][] aggiungiVariabili(GRBModel model, int[] produzione, int[] domanda) throws GRBException{
 		GRBVar[][] xij = new GRBVar[produzione.length][domanda.length];
 
-		for (int i = 0; i < m; i++) //matrice mxn 25x51
+		for (int i = 0; i < m; i++)
 		{
 			for (int j = 0; j < n; j++)
 			{
@@ -925,28 +893,9 @@ public class ElaboratoGurobi
 		}
 	}
 
-	
-	
-	private static void risolvi(GRBModel model) throws GRBException
-	{
-		model.optimize();
-		// 2 soluzione ottima trovata
-		// 3 non esiste soluzione ammissibile (infeasible)
-		// 5 soluzione illimitata
-		// 9 tempo limite raggiunto
-
-		for(GRBVar var : model.getVars()){
-			
-			System.out.println(var.get(StringAttr.VarName)+ ": "+ var.get(DoubleAttr.X));
-		}
-	}
-
 	private static void stampaVincoliInattivi(GRBModel model) throws GRBException {
 	    // Risolve il modello
 	    model.optimize();
-
-	    // Ottiene il valore ottimo della funzione obiettivo
-	    double objValue = model.get(GRB.DoubleAttr.ObjVal);
 
 	    // Cicla sui vincoli e verifica se sono attivi o meno
 	    GRBConstr[] constraints = model.getConstrs();
