@@ -126,77 +126,12 @@ public class ElaboratoGurobi
 		System.out.println("QUESITO I: ");
 		
 		try {
-			System.out.printf("funzione obiettivo = %.04f\n", model.get(GRB.DoubleAttr.ObjVal));
-			System.out.println("soluzione di base ottima:");
-           
 			
-			for(int i=0; i<m; i++) {
-				for(int j=0; j<m; j++) {
-					
-					System.out.println("x_"+i+"_"+j + " : "+ xij[i][j].get(GRB.DoubleAttr.X));
-				}
-			}
-            System.out.println("");
+			System.out.printf("funzione obiettivo = %.04f\n", model.get(GRB.DoubleAttr.ObjVal));
+			System.out.println("");
+			stampaSolBase(xij);
             
-            // Soluzione ottima multipla
-            System.out.print("Multipla: ");
-            // Controllo se c'è una var non in base con CCR nullo
-            boolean multipla = false;
-
-            // Ciclo su tutte le var, guardo tra quelle non in base
-            // se loro CCR è nullo
-
-            // Per var originali
-			  for (GRBVar var : model.getVars()) { 
-				  if (var.get(GRB.IntAttr.VBasis) != 0) {
-					  if(var.get(GRB.DoubleAttr.RC) == 0.) {
-						  	multipla = true; 
-						  	break; 
-						  	} 
-					  } 
-				  } //Per var di slack 
-			 
-			  for (GRBConstr constr : model.getConstrs()){
-				 if(constr.get(GRB.IntAttr.CBasis) != 0){
-					 if (constr.get(GRB.DoubleAttr.Pi) == 0.) 
-					 { 
-						 multipla = true; 
-						 break; 
-						 }
-					 }
-				 }
-			 
-			  System.out.print(multipla ? "Sì" : "No");
-
-            System.out.println("");
-            
-            // Soluzione ottima degenere
-            System.out.print("Degenere: ");
-            // Controllo se c'è una var in base nulla.
-            boolean degenere = false;
-
-            // Ciclo su tutte le var, guardo tra quelle in base se nulle
-            // Per var originali
-            for (GRBVar var : model.getVars()) {
-                if (var.get(GRB.IntAttr.VBasis) == 0){
-                    if (var.get(GRB.DoubleAttr.X) == 0.){
-                        degenere = true;
-                        break;
-                    }
-                }
-            }
-            // Per var di slack
-            for (GRBConstr constr : model.getConstrs()) {
-                if (constr.get(GRB.IntAttr.CBasis) == 0) {
-                    if (constr.get(GRB.DoubleAttr.Slack) == 0.) {
-                        degenere = true;
-                        break;
-                    }
-                }
-            }
-            System.out.println(degenere ? "Sì" : "No");
-            
-            System.out.println("");
+            stampaMultiplaDegenere(model);
             
             System.out.println("QUESITO II: ");
                
@@ -222,6 +157,81 @@ public class ElaboratoGurobi
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	private static void stampaSolBase(GRBVar[][] xij) throws GRBException {
+		System.out.println("soluzione di base ottima:");
+         
+		
+		for(int i=0; i<m; i++) {
+			for(int j=0; j<m; j++) {
+				
+				System.out.println("x_"+i+"_"+j + " : "+ xij[i][j].get(GRB.DoubleAttr.X));
+			}
+		}
+		System.out.println("");
+	}
+
+	private static void stampaMultiplaDegenere(GRBModel model) throws GRBException {
+		// Soluzione ottima multipla
+		System.out.print("Multipla: ");
+		// Controllo se c'è una var non in base con CCR nullo
+		boolean multipla = false;
+
+		// Ciclo su tutte le var, guardo tra quelle non in base
+		// se loro CCR è nullo
+
+		// Per var originali
+		  for (GRBVar var : model.getVars()) { 
+			  if (var.get(GRB.IntAttr.VBasis) != 0) {
+				  if(var.get(GRB.DoubleAttr.RC) == 0.) {
+					  	multipla = true; 
+					  	break; 
+					  	} 
+				  } 
+			  } //Per var di slack 
+		 
+		  for (GRBConstr constr : model.getConstrs()){
+			 if(constr.get(GRB.IntAttr.CBasis) != 0){
+				 if (constr.get(GRB.DoubleAttr.Pi) == 0.) 
+				 { 
+					 multipla = true; 
+					 break; 
+					 }
+				 }
+			 }
+		 
+		  System.out.print(multipla ? "Sì" : "No");
+
+		System.out.println("");
+		
+		// Soluzione ottima degenere
+		System.out.print("Degenere: ");
+		// Controllo se c'è una var in base nulla.
+		boolean degenere = false;
+
+		// Ciclo su tutte le var, guardo tra quelle in base se nulle
+		// Per var originali
+		for (GRBVar var : model.getVars()) {
+		    if (var.get(GRB.IntAttr.VBasis) == 0){
+		        if (var.get(GRB.DoubleAttr.X) == 0.){
+		            degenere = true;
+		            break;
+		        }
+		    }
+		}
+		// Per var di slack
+		for (GRBConstr constr : model.getConstrs()) {
+		    if (constr.get(GRB.IntAttr.CBasis) == 0) {
+		        if (constr.get(GRB.DoubleAttr.Slack) == 0.) {
+		            degenere = true;
+		            break;
+		        }
+		    }
+		}
+		System.out.println(degenere ? "Sì" : "No");
+		
+		System.out.println("");
 	}
 
 	private static void rispondiTerzoQuesito() throws GRBException {
@@ -907,7 +917,7 @@ public class ElaboratoGurobi
 	        double slack = constraint.get(GRB.DoubleAttr.Slack);
 	        if (slack != 0.0) {
 	            // Il vincolo non è attivo
-	            System.out.print(constraint.get(GRB.StringAttr.ConstrName)+",");
+	            System.out.print(constraint.get(GRB.StringAttr.ConstrName)+",\t");
 	        }
 	    }
 	    System.out.println("");
