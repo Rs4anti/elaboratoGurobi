@@ -56,7 +56,7 @@ public class ElaboratoGurobi
 	static double c = 0.01;// costo trasposrto €/Km
 	static int k = 12; //raggio Km
 	
-	int[] alfa_j = {1600,3500,2900,1300,4600,4100,600,4400,600,4400,2400,1600,4300,1000,1400,3800,1300,2600,1600,4300,2500,1600,1000,900,3600}; //	quesito III
+	static int[] alfa_j = {1600,3500,2900,1300,4600,4100,600,4400,600,4400,2400,1600,4300,1000,1400,3800,1300,2600,1600,4300,2500,1600,1000,900,3600}; //	quesito III
 	static int h = 14; //Questo II capacità magazzino 14
 	static int x = 3;// Quesito II magazzino 3
 	static int y = 4;//Quesito II cliente 4
@@ -201,9 +201,7 @@ public class ElaboratoGurobi
             System.out.println("");
             
             System.out.println("QUESITO II: ");
-            
-            
-            
+               
             stampaVincoliInattivi(model);
             
             stampaIntervalloK();
@@ -214,10 +212,113 @@ public class ElaboratoGurobi
             
             faiAnalisiSensitivitaDistanza(model);
             
+            
+            System.out.println("QUESITO III: ");
+            
+            rispondiTerzoQuesito();
+            
+            
+            
+            
 		} catch (GRBException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	private static void rispondiTerzoQuesito() throws GRBException {
+		// Definizione della funzione obiettivo (massimizzare il risparmio ottenibile dalla chiusura dei magazzini)
+		GRBEnv env = new GRBEnv();
+		
+		env.set(IntParam.Presolve, 0);
+		env.set(IntParam.Method, 0);
+		
+		//Per non far stampare a video output relativo all'env
+		env.set(GRB.IntParam.OutputFlag, 0);
+		
+		GRBModel model = new GRBModel(env);
+		
+		// Creazione delle variabili di decisione
+		GRBVar[][] xij = aggiungiVariabili(model, produzione, domanda);
+		GRBVar[] a_i = aggiungiVariabiliAusiliarieMagazzini(model);
+		
+		
+		
+		//Creazione delle variabili binarie
+		
+		int[][] y = creaAusiliarie(d_ij, k);
+		
+		// Aggiunta della funzione obiettivo, devo massimizzare il guadagno
+		GRBLinExpr obj = new GRBLinExpr();
+        for (int i = 0; i < alfa_j.length; i++) {
+            obj.addTerm(alfa_j[i], a_i[i]);
+        }
+        model.setObjective(obj, GRB.MAXIMIZE);
+		
+		// Aggiunta vincoli produzione
+        aggiungiVincoliProduzioneConBinarie(model, xij, a_i);
+		//aggiungiVincoliProduzione(model, xij, produzione);
+		
+		// Aggiunta vincolo domanda
+		aggiungiVincoliDomanda(model, xij, domanda, y);
+		
+		//Aggiunta vincolo distanze
+		
+		// Ottimizza il modello
+		model.optimize();
+		
+	     // Stampa a video del risparmio ottenibile dall'azienda
+        System.out.println("Risparmio ottenibile: " + model.get(GRB.DoubleAttr.ObjVal));
+        
+        //Stampa della lista dei magazzini chiusi
+        System.out.print("Lista magazzini chiusi = [");
+        for(int i=0; i<a_i.length; i++) {
+        	if(a_i[i].get(GRB.DoubleAttr.X) == 0.0) {
+        		
+        		System.out.print("Magazzino " + i+ ",  ");
+        	}
+        	
+        }
+        System.out.print("]");   
+        
+        
+        
+}
+
+
+	private static void aggiungiVincoliProduzioneConBinarie(GRBModel model, GRBVar[][] xij, GRBVar[] a_i) throws GRBException {
+		
+	
+		
+		for (int i = 0; i < m; i++) {
+		    
+		    // modifica il vincolo di capacità del magazzino j
+		    GRBLinExpr expr = new GRBLinExpr();
+		    for (int j = 0; j < n; j++) {
+		        expr.addTerm(1.0, xij[i][j]);
+		    }
+		    
+		   if( i < alfa_j.length) {
+			   expr.addTerm(produzione[i], a_i[i]);
+			   model.addConstr(expr, GRB.LESS_EQUAL, produzione[i], "vincolo_prod_i_" +i);
+		   }
+		   else {
+			   model.addConstr(expr, GRB.LESS_EQUAL, produzione[i], "vincolo_produzione_i_"+i);
+		   }
+		}
+		
+	}
+
+	private static GRBVar[] aggiungiVariabiliAusiliarieMagazzini(GRBModel model) throws GRBException {
+		GRBVar[] xi = new GRBVar[alfa_j.length];
+
+		for (int i = 0; i < m; i++)
+		{
+			
+			xi[i] = model.addVar(0.0, 1.0, 0.0, GRB.BINARY, "x" + i);
+			
+		}
+		return xi;
 	}
 
 	private static void faiAnalisiSensitivitaDistanza(GRBModel model) throws GRBException {
@@ -724,7 +825,7 @@ public class ElaboratoGurobi
 				    		for(int i=0; i<dualVar.length; i++) {
 				    			
 				    			int index = i+1;
-				    			System.out.print("Lambda "+ index + ":" );
+				    			System.out.print("Lambda "+ index + ": " );
 				    			System.out.printf("%.04f, ", Math.abs(dualVar[i].get(GRB.DoubleAttr.X)));
 				    			System.out.println("");
 				    		}
@@ -771,6 +872,22 @@ public class ElaboratoGurobi
 			}
 			model.addConstr(expr, GRB.LESS_EQUAL, produzione[i], "vincolo_produzione_i_"+i);
 		}
+	}
+	
+	
+	public static GRBConstr[] ottieniVincoliProduzione(GRBModel model, GRBVar[][] xij) throws GRBException {
+		GRBConstr[] vincoliProd = new GRBConstr[produzione.length];
+		for (int i = 0; i < m; i++){
+			GRBLinExpr expr = new GRBLinExpr();
+
+			for (int j = 0; j < n; j++){
+				expr.addTerm(1, xij[i][j]);
+			}
+			
+			vincoliProd[i] = model.addConstr(expr, GRB.LESS_EQUAL, produzione[i], "vincolo_produzione_i_"+i);
+		}
+		
+		return vincoliProd;
 	}
 	
 	private static void aggiungiVincoliDomanda(GRBModel model, GRBVar[][] xij, int[] domanda, int[][] y) throws GRBException{
