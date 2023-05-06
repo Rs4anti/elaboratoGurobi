@@ -533,7 +533,7 @@ public class ElaboratoGurobi
         
         
         if(dMax==-1) {
-        	 System.out.println("Intervallo d_xy = ["+dMin+ ", "+ "INF]" );
+        	 System.out.println("Intervallo d_xy = ["+dMin+ ", "+ " +INF]" );
         }
         else {
         	System.out.println("Intervallo d_xy = ["+dMin+ ", "+ dMax+"]" );
