@@ -55,9 +55,9 @@ public class ElaboratoGurobi
 	static int k = 12; //raggio Km
 	
 	static int[] alfa_j = {1600,3500,2900,1300,4600,4100,600,4400,600,4400,2400,1600,4300,1000,1400,3800,1300,2600,1600,4300,2500,1600,1000,900,3600}; //	quesito III
-	static int h = 14; //Questo II capacità magazzino 14
-	static int x = 3;// Quesito II magazzino 3
-	static int y = 4;//Quesito II cliente 4
+	static int h = 14; 
+	static int x = 3;
+	static int y = 4;
 	
 	public static void main(String[] args)
 	{
@@ -80,16 +80,14 @@ public class ElaboratoGurobi
 			
 			int[][] y = creaAusiliarie(d_ij, k);
 			
-			// Aggiunta della funzione obiettivo
+			// Aggiungo della funzione obiettivo
 			aggiungiFunzioneObiettivo(model, xij, d_ij, c);
 			
-			// Aggiunta vincoli produzione
+			// Aggiungo vincoli produzione
 			aggiungiVincoliProduzione(model, xij, produzione);
 			
-			// Aggiunta vincolo domanda
+			// Aggiungo vincolo domanda
 			aggiungiVincoliDomanda(model, xij, domanda, y);
-			
-			//Aggiunta vincolo distanze
 			
 			// Ottimizza il modello
 			model.optimize();
@@ -154,13 +152,12 @@ public class ElaboratoGurobi
             
             
 		} catch (GRBException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	private static void stampaSolBase(GRBVar[][] xij) throws GRBException {
-		System.out.println("soluzione di base ottima:");
+		System.out.println("Soluzione di base ottima:");
          
 		
 		for(int i=0; i<m; i++) {
@@ -173,8 +170,11 @@ public class ElaboratoGurobi
 	}
 
 	private static void stampaMultiplaDegenere(GRBModel model) throws GRBException {
+		
 		// Soluzione ottima multipla
+		
 		System.out.print("Multipla: ");
+		
 		// Controllo se c'è una var non in base con CCR nullo
 		boolean multipla = false;
 
@@ -207,6 +207,7 @@ public class ElaboratoGurobi
 		
 		// Soluzione ottima degenere
 		System.out.print("Degenere: ");
+		
 		// Controllo se c'è una var in base nulla.
 		boolean degenere = false;
 
@@ -220,6 +221,7 @@ public class ElaboratoGurobi
 		        }
 		    }
 		}
+		
 		// Per var di slack
 		for (GRBConstr constr : model.getConstrs()) {
 		    if (constr.get(GRB.IntAttr.CBasis) == 0) {
@@ -235,7 +237,9 @@ public class ElaboratoGurobi
 	}
 
 	private static void rispondiTerzoQuesito() throws GRBException {
-		// Definizione della funzione obiettivo (massimizzare il risparmio ottenibile dalla chiusura dei magazzini)
+		
+		// Definizione della funzione obiettivo 
+		//(massimizzare il risparmio ottenibile dalla chiusura dei magazzini)
 		GRBEnv env = new GRBEnv();
 		
 		env.set(IntParam.Presolve, 0);
@@ -270,10 +274,10 @@ public class ElaboratoGurobi
 		// Ottimizza il modello
 		model.optimize();
 		
-	     // Stampa a video del risparmio ottenibile dall'azienda
+	     // Stampo del risparmio ottenibile dall'azienda
         System.out.println("Risparmio ottenibile: " + model.get(GRB.DoubleAttr.ObjVal));
         
-        //Stampa della lista dei magazzini chiusi
+        //Stampo della lista dei magazzini chiusi
         System.out.print("Lista magazzini chiusi = [");
         for(int i=0; i<a_i.length; i++) {
         	if(a_i[i].get(GRB.DoubleAttr.X) == 0.0) {
@@ -311,7 +315,6 @@ public class ElaboratoGurobi
         System.out.println();
         double rilassamentoContinuo = model.get(GRB.DoubleAttr.ObjVal);
         System.out.println("Rilassamento continuo= " + rilassamentoContinuo);
-        
 }
 
 
@@ -321,7 +324,7 @@ public class ElaboratoGurobi
 		
 		for (int i = 0; i < m; i++) {
 		    
-		    // modifica il vincolo di capacità del magazzino j
+		    // aggiungo il vincolo di capacità del magazzino j
 		    GRBLinExpr expr = new GRBLinExpr();
 		    for (int j = 0; j < n; j++) {
 		        expr.addTerm(1.0, xij[i][j]);
@@ -356,11 +359,14 @@ public class ElaboratoGurobi
 		int dMax=0, dMin=0;
 		
 		GRBVar[] originalVars = model.getVars(); 
+		
 		// Ottiene tutte le variabili del modello
 		double[] originalVarValues = new double[originalVars.length];
+		
 		// Crea un array per i valori delle variabili
 		for (int i = 0; i < originalVars.length; i++) {
-		    originalVarValues[i] = originalVars[i].get(GRB.DoubleAttr.X); // Aggiunge il valore della variabile all'array
+		    originalVarValues[i] = originalVars[i].get(GRB.DoubleAttr.X); 
+		    // Aggiungo il valore della variabile all'array
 		}
         System.out.println("");
         
@@ -408,9 +414,9 @@ public class ElaboratoGurobi
 				// Ciclo sulle var originali
 				// Ricavo tutte le variabili del modello
 				GRBVar[] modelIncrementVars = modelIncrement.getVars();
+				
 				// Crea un array con i valori delle variabili
 				double[] modelIncrementVarsValue = new double[modelIncrementVars.length]; 
-				
 				
 				// Aggiunge il valore della variabile all'array
 				for (int i = 0; i < modelIncrementVars.length; i++) {
@@ -449,9 +455,6 @@ public class ElaboratoGurobi
 		{
 			System.out.println("Error code: " + e.getErrorCode() + ". " + e.getMessage());
 		}
-        
-        
-   
         
         
         //DIMINUISCO LA DISTANZA
@@ -564,11 +567,18 @@ public class ElaboratoGurobi
 	}
 
 	private static void faiAnalisiSensitivitaMagazzino(GRBModel model, int magazzinoH) throws GRBException {
+		
 		// Ciclo sulle var originali
-		GRBVar[] originalVars = model.getVars(); // Ottiene tutte le variabili del modello
-		double[] originalVarValues = new double[originalVars.length]; // Crea un array per i valori delle variabili
+		
+		// Ottiene tutte le variabili del modello
+		GRBVar[] originalVars = model.getVars();
+		
+		// Crea un array per i valori delle variabili
+		double[] originalVarValues = new double[originalVars.length]; 
+		
 		for (int i = 0; i < originalVars.length; i++) {
-		    originalVarValues[i] = originalVars[i].get(GRB.DoubleAttr.X); // Aggiunge il valore della variabile all'array
+		    originalVarValues[i] = originalVars[i].get(GRB.DoubleAttr.X); 
+		    // Aggiunge il valore della variabile all'array
 		}
         System.out.println("");
         
@@ -596,12 +606,13 @@ public class ElaboratoGurobi
 				
 				// Aggiunta vincoli produzione
 				aggiungiModificaVincoliProduzione(modelIncrement, xij, capacitaInc++, magazzinoH);
-				//aggiungiVincoliProduzione(modelIncrement, xij, produzione);
 
 				// Aggiunta della funzione obiettivo
 				aggiungiFunzioneObiettivo(modelIncrement, xij, d_ij, c);
+				
 				//Creazione delle variabili binarie
 				int[][] y = creaAusiliarie(d_ij, k);
+				
 				// Aggiunta vincolo domanda
 				aggiungiVincoliDomanda(modelIncrement, xij, domanda, y);
 				modelIncrement.optimize();
@@ -609,11 +620,18 @@ public class ElaboratoGurobi
 				//ricavo valori delle variabili di modelIncrement
 				
 				// Ciclo sulle var originali
-				GRBVar[] modelIncrementVars = modelIncrement.getVars(); // Ottiene tutte le variabili del modello
-				double[] modelIncrementVarsValue = new double[modelIncrementVars.length]; // Crea un array per i valori delle variabili
+				// Ottengo tutte le variabili del modello
+				GRBVar[] modelIncrementVars = modelIncrement.getVars(); 
+				
+				// Creo un array per i valori delle variabili
+				double[] modelIncrementVarsValue = new double[modelIncrementVars.length]; 
+				
 				
 				for (int i = 0; i < modelIncrementVars.length; i++) {
-					modelIncrementVarsValue[i] = modelIncrementVars[i].get(GRB.DoubleAttr.X); // Aggiunge il valore della variabile all'array
+					
+					// Aggiungo il valore della variabile all'array
+					modelIncrementVarsValue[i] = modelIncrementVars[i].get(GRB.DoubleAttr.X); 
+					
 				}
 		        System.out.println("");
 				
@@ -653,7 +671,7 @@ public class ElaboratoGurobi
 
 			while(basiUguali) {
 				
-				
+				capacitaDec--;
 				
 				GRBModel modelDecrement = new GRBModel(envDecrement);
 				
@@ -661,13 +679,14 @@ public class ElaboratoGurobi
 				GRBVar[][] xij = aggiungiVariabili(modelDecrement, produzione, domanda);
 				
 				// Aggiunta vincoli produzione
-				aggiungiModificaVincoliProduzione(modelDecrement, xij, capacitaDec--, magazzinoH);
-				//aggiungiVincoliProduzione(modelIncrement, xij, produzione);
+				aggiungiModificaVincoliProduzione(modelDecrement, xij, capacitaDec, magazzinoH);
 
 				// Aggiunta della funzione obiettivo
 				aggiungiFunzioneObiettivo(modelDecrement, xij, d_ij, c);
+				
 				//Creazione delle variabili binarie
 				int[][] y = creaAusiliarie(d_ij, k);
+				
 				// Aggiunta vincolo domanda
 				aggiungiVincoliDomanda(modelDecrement, xij, domanda, y);
 				modelDecrement.optimize();
@@ -675,11 +694,18 @@ public class ElaboratoGurobi
 				//ricavo valori delle variabili di modelIncrement
 				
 				// Ciclo sulle var originali
-				GRBVar[] modelDecrementVars = modelDecrement.getVars(); // Ottiene tutte le variabili del modello
-				double[] modelDecrementVarsValue = new double[modelDecrementVars.length]; // Crea un array per i valori delle variabili
+				// Ottengo tutte le variabili del modello
+				GRBVar[] modelDecrementVars = modelDecrement.getVars(); 
+				
+				// Creo un array per i valori delle variabili
+				double[] modelDecrementVarsValue = new double[modelDecrementVars.length]; 
+				
 				
 				for (int i = 0; i < modelDecrementVars.length; i++) {
-					modelDecrementVarsValue[i] = modelDecrementVars[i].get(GRB.DoubleAttr.X); // Aggiunge il valore della variabile all'array
+					
+					// Aggiungo il valore della variabile all'array
+					modelDecrementVarsValue[i] = modelDecrementVars[i].get(GRB.DoubleAttr.X); 
+					
 				}
 		        System.out.println("");
 				
@@ -829,7 +855,7 @@ public class ElaboratoGurobi
 				    		}
 				    		
 					} catch (GRBException e) {
-						// TODO Auto-generated catch block
+						
 						e.printStackTrace();
 					}    		
 }
@@ -923,5 +949,3 @@ public class ElaboratoGurobi
 	    System.out.println("");
 	}
 }
-
-
